@@ -42,7 +42,7 @@ PImage endBg;
 String endBgFile = "images/youwin.png";
 
 //Example Variables
-//HexGrid hGrid = new HexGrid(3);
+HexGrid hGrid = new HexGrid(3);
 //SoundFile song;
 
 
@@ -52,7 +52,7 @@ void setup() {
   //Match the screen size to the background image size
   size(800,600);
 
-  hGrid.displayHexGrid();
+
   
   //Set the title on the title bar
   surface.setTitle(titleText);
@@ -185,6 +185,8 @@ public void updateTitleBar(){
 
 //method to update what is drawn on the screen each frame
 public void updateScreen(){
+
+  hGrid.displayHexGrid();
 
   //Update the Background
   background(currentScreen.getBg());
