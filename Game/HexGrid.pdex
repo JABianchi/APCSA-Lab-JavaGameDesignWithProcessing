@@ -220,8 +220,8 @@ public class HexGrid {
 				PGraphics maskImage;
 				maskImage = createGraphics(iSize,iSize);
 				maskImage.beginDraw();
-				//maskImage.triangle(30, 480, 256, 30, 480, 480);
-				//maskImage = drawOneHex(PGraphics maskImage);
+				maskImage.triangle(30, 480, 256, 30, 480, 480);
+				//drawOneHex(maskImage);
 				maskImage.endDraw();
 				
 				// apply mask
@@ -382,7 +382,7 @@ public class HexGrid {
 	}
 
     //needs to be modified slightly because HexGrid doesn't include ALL tiles in the rectangle (like 0,0)
-	// public boolean isValid(final HexLocation loc) {
+	// public boolean isValidLocation(final HexLocation loc) {
 	// 	final int row = loc.getYCoord();
 	// 	final int col = loc.getXCoord();
 	// 	return 0 <= row && row < getNumRows() && 0 <= col && col < getNumCols();
@@ -422,20 +422,20 @@ public class HexGrid {
 
 
 	public void setFillColor(final HexLocation loc, final color clr) {
-		if (!isValid(loc))
+		if (!isValidLocation(loc))
 			throw new RuntimeException("cannot set color of invalid location " + loc + " to color " + clr);
 		map[loc.getXCoord()][loc.getYCoord()].setColor(clr);
 		//repaint();
 	}
 
 	public color getFillColor(final HexLocation loc) {
-		if (!isValid(loc))
+		if (!isValidLocation(loc))
 			throw new RuntimeException("cannot get color from invalid location " + loc);
 		return map[loc.getYCoord()][loc.getXCoord()].getColor();
 	}
 
 	// public void setImage(final HexLocation loc, final String imageFileName) {
-	// 	if (!isValid(loc))
+	// 	if (!isValidLocation(loc))
 	// 		throw new RuntimeException(
 	// 				"cannot set image for invalid location " + loc + " to \"" + imageFileName + "\"");
 	// 	map[loc.getXCoord()][loc.getYCoord()].setImageFileName(imageFileName);
@@ -443,20 +443,20 @@ public class HexGrid {
 	// }
 
 	// public String getImage(final Location loc) {
-	// 	if (!isValid(loc))
+	// 	if (!isValidLocation(loc))
 	// 		throw new RuntimeException("cannot get image for invalid location " + loc);
 	// 	return map[loc.getYCoord()][loc.getXCoord()].getImageFileName();
 	// }
 
 	public void setTileOutlineColor(final HexLocation loc, final color clr) {
-		if (!isValid(loc))
+		if (!isValidLocation(loc))
 			throw new RuntimeException("cannot set outline for invalid location " + loc);
             map[loc.getXCoord()][loc.getYCoord()].setOutlineColor(clr);
 		//repaint();
 	}
 
 	public color getTileOutlineColor(final HexLocation loc) {
-		if (!isValid(loc))
+		if (!isValidLocation(loc))
 			throw new RuntimeException("cannot get outline color for invalid location " + loc);
 		return map[loc.getXCoord()][loc.getYCoord()].getOutlineColor();
 	}

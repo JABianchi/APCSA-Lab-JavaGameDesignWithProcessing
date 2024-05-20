@@ -20,7 +20,7 @@ Screen splashScreen;
 String splashBgFile = "images/apcsa.png";
 PImage splashBg;
 
-//Sky Screen Variables
+//Main Screen Variables
 Grid mainGrid;
 String mainBgFile = "images/chess.jpg";
 PImage mainBg;
@@ -51,6 +51,8 @@ void setup() {
 
   //Match the screen size to the background image size
   size(800,600);
+
+  hGrid.displayHexGrid();
   
   //Set the title on the title bar
   surface.setTitle(titleText);
@@ -192,7 +194,7 @@ public void updateScreen(){
     currentScreen = mainGrid;
   }
 
-  //skyGrid Screen Updates
+  //Main Grid Screen Updates
   if(currentScreen == mainGrid){
     currentGrid = mainGrid;
 
@@ -206,6 +208,8 @@ public void updateScreen(){
     mainGrid.showGridSprites();
 
     checkExampleAnimation();
+
+
     
   }
 
