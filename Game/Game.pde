@@ -5,12 +5,14 @@
 
 //import processing.sound.*;
 
-//GAME VARIABLES
+//------------------ GAME VARIABLES --------------------//
+
+//Title Bar
 private int msElapsed = 0;
 String titleText = "HorseChess";
 String extraText = "Who's Turn?";
 
-//Screens
+//Current Screens
 Screen currentScreen;
 World currentWorld;
 Grid currentGrid;
@@ -20,8 +22,8 @@ Screen splashScreen;
 String splashBgFile = "images/apcsa.png";
 PImage splashBg;
 
-//MainScreen Variables
-Grid mainGrid;
+//Level1 Screen Variables
+Grid level1Grid;
 String mainBgFile = "images/sky.png";
 PImage mainBg;
 
@@ -46,6 +48,7 @@ String endBgFile = "images/youwin.png";
 //HexGrid hGrid = new HexGrid(3);
 //SoundFile song;
 
+//------------------ REQUIRED PROCESSING METHODS --------------------//
 
 //Required Processing method that gets run once
 void setup() {
@@ -66,23 +69,23 @@ void setup() {
 
   //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
-  mainGrid = new Grid("sky", mainBg, 6, 6);
+  level1Grid = new Grid("sky", mainBg, 6, 6);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
   //setup the sprites  
   player1 = new Sprite(player1File, 0.25);
   // GridLocation loc = new GridLocation(player1row, player1Col);
-  // mainGrid.setTileSprite(loc, player1);
+  // level1Grid.setTileSprite(loc, player1);
   //addSprite(player1);
-  //player1.resize(mainGrid.getTileWidthPixels(),mainGrid.getTileHeightPixels());
+  //player1.resize(level1Grid.getTileWidthPixels(),level1Grid.getTileHeightPixels());
   // enemy = loadImage("images/articuno.png");
   // enemy.resize(100,100);
   exampleAnimationSetup();
 
   //Adding pixel-based Sprites to the world
-  // mainGrid.addSpriteCopyTo(exampleSprite);
-  mainGrid.printSprites();
+  // level1Grid.addSpriteCopyTo(exampleSprite);
+  level1Grid.printSprites();
   System.out.println("Done adding sprites to main world..");
   
   //Other Setup
@@ -101,31 +104,32 @@ void setup() {
 void draw() {
 
   updateTitleBar();
+  updateScreen();
 
-  //handle sprites on screen
+  //simple timing handling
   if (msElapsed % 300 == 0) {
+    //sprite handling
     populateSprites();
     moveSprites();
   }
-  updateScreen();
-  
+  msElapsed +=100;
+  currentScreen.pause(100);
+
   //check for end of game
   if(isGameOver()){
     endGame();
   }
-  
-  //handle timing
-  msElapsed +=100;
-  currentScreen.pause(100);
 
 } //end draw()
+
+//------------------ USER INPUT METHODS --------------------//
 
 
 //Known Processing method that automatically will run whenever a key is pressed
 void keyPressed(){
 
   //check what key was pressed
-  System.out.println("Key pressed: " + keyCode); //keyCode gives you an integer for the key
+  System.out.println("Key pressed: " + key); //keyCode gives you an integer for the key
 
   //What to do when a key is pressed?
   
@@ -168,7 +172,7 @@ void mouseClicked(){
 
 
 
-//------------------ CUSTOM  METHODS --------------------//
+//------------------ CUSTOM  GAME METHODS --------------------//
 
 //method to update the Title Bar of the Game
 public void updateTitleBar(){
@@ -191,24 +195,24 @@ public void updateScreen(){
 
   //splashScreen update
   if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
-    currentScreen = mainGrid;
+    currentScreen = level1Grid;
   }
 
-  //skyGrid Screen Updates
-  if(currentScreen == mainGrid){
-    currentGrid = mainGrid;
+  //level1Grid Screen Updates
+  if(currentScreen == level1Grid){
+    currentGrid = level1Grid;
 
     //show Player1 REGULAR SPRITE
     player1.show();
 
     //Display the Player1 image
     //GridLocation player1Loc = new GridLocation(player1Row,player1Col);
-    //mainGrid.setTileImage(player1Loc, player1);
+    //level1Grid.setTileImage(player1Loc, player1);
       
     //update other screen elements
-    mainGrid.showSprites();
-    mainGrid.showImages();
-    mainGrid.showGridSprites();
+    level1Grid.showSprites();
+    level1Grid.showImages();
+    level1Grid.showGridSprites();
 
     checkExampleAnimation();
     
