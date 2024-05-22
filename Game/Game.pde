@@ -25,7 +25,7 @@ Grid mainGrid;
 String mainBgFile = "images/sky.png";
 PImage mainBg;
 
-PImage player1;
+Sprite player1;
 String player1File = "images/zapdos.png";
 int player1Row = 0;
 int player1Col = 2;
@@ -71,8 +71,11 @@ void setup() {
   currentScreen = splashScreen;
 
   //setup the sprites  
-  player1 = loadImage(player1File);
-  player1.resize(mainGrid.getTileWidthPixels(),mainGrid.getTileHeightPixels());
+  player1 = new Sprite(player1File, 0.25);
+  // GridLocation loc = new GridLocation(player1row, player1Col);
+  // mainGrid.setTileSprite(loc, player1);
+  //addSprite(player1);
+  //player1.resize(mainGrid.getTileWidthPixels(),mainGrid.getTileHeightPixels());
   // enemy = loadImage("images/articuno.png");
   // enemy.resize(100,100);
   exampleAnimationSetup();
@@ -126,17 +129,15 @@ void keyPressed(){
 
   //What to do when a key is pressed?
   
-  //set [W] key to move the player1 up & avoid Out-of-Bounds errors
-  if(keyCode == 87){
-   
-    //Store old GridLocation
-    GridLocation oldLoc = new GridLocation(player1Row, player1Col);
-
-    //Erase image from previous location
-    
-
-    //change the field for player1Row
-    player1Row--;
+  //set [W] key to move the player1 down
+  if(key == 'w'){
+    player1.move(0,-10);
+  } else if (key == 's'){
+    player1.move(0,10);
+  } else if (key == 'a'){
+    player1.move(-10,0);
+  } else if (key == 'd'){
+    player1.move(10,0);
   }
 
 
@@ -197,9 +198,12 @@ public void updateScreen(){
   if(currentScreen == mainGrid){
     currentGrid = mainGrid;
 
+    //show Player1 REGULAR SPRITE
+    player1.show();
+
     //Display the Player1 image
-    GridLocation player1Loc = new GridLocation(player1Row,player1Col);
-    mainGrid.setTileImage(player1Loc, player1);
+    //GridLocation player1Loc = new GridLocation(player1Row,player1Col);
+    //mainGrid.setTileImage(player1Loc, player1);
       
     //update other screen elements
     mainGrid.showSprites();

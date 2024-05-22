@@ -1,12 +1,8 @@
 /* Sprite class - to create objects that move around with their own properties
  * Inspired by Daniel Shiffman's p5js Animated Sprite tutorial
  * Author: Joel Bianchi
- * Last Edit: 6/5/23
- * Modified to account for picture coordinates at Top, Left corner
- * Added Constructor #3
- * spriteImgPath renamed to spriteImgFile
- * variable renaming
- * sprite copying
+ * Last Edit: 5/22/2024
+ * Added Sprite constructor with scaling
  */
 
 public class Sprite {
@@ -22,7 +18,22 @@ public class Sprite {
     private boolean isAnimated;
 
 
-  // Sprite Constructor #1
+  // Sprite Constructor #1: Only pass in the image file (Non-animated)
+  public Sprite(String spriteImgFile){
+    this(spriteImgFile, 1.0, 0.0, 0.0, false);
+  }
+
+  // Sprite Constructor #2: Only pass in the image file that can be scaled (Non-animated)
+  public Sprite(String spriteImgFile, float scale){
+    this(spriteImgFile, scale, 0.0, 0.0, false);
+  }
+
+  // Sprite Constructor #3: for Non-Animated Sprite
+  public Sprite(String spriteImgFile, float scale, float x, float y) {
+    this(spriteImgFile, scale, x, y, false);
+  }
+
+  // Sprite Constructor #4: for ANY Sprite
   public Sprite(String spriteImgFile, float scale, float x, float y, boolean isAnimated) {
     this.spriteImgFile = spriteImgFile;
     setLeft(x);
@@ -35,16 +46,6 @@ public class Sprite {
       w = spriteImg.width * scale;
       h = spriteImg.height * scale;
     }
-  }
-
-  // Sprite Constructor #2: for Non-Animated Sprite
-  public Sprite(String spriteImgFile, float x, float y) {
-    this(spriteImgFile, 1.0, x, y, false);
-  }
-
-  // Sprite Constructor #3: Only pass in the image
-  public Sprite(String spriteImgFile){
-    this(spriteImgFile, 0.0, 0.0);
   }
 
 
