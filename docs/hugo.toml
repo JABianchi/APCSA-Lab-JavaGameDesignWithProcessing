@@ -1,0 +1,4 @@
+baseURL = 'https://jabianchi.github.io/JavaGameDesignWithProcessing/'
+languageCode = 'en-us'
+title = 'APCSA Java Game with Processing Project'
+theme = 'ananke'
