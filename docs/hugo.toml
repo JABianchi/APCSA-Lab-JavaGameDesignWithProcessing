@@ -9,7 +9,7 @@ resourcedir = 'docs/resources'
 staticdir = 'docs/static'
 themesdir = 'docs/themes'
 
-baseURL = 'https://jabianchi.github.io/'
+baseURL = 'https://jabianchi.github.io/JavaGameDesignWithProcessing/'
 languageCode = 'en-us'
 title = 'APCSA Java Game with Processing Project'
 theme = 'ananke'
