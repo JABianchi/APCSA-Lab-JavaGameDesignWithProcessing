@@ -79,7 +79,7 @@ void setup() {
   // level1Grid.setTileSprite(loc, player1);
   //addSprite(player1);
   //player1.resize(level1Grid.getTileWidthPixels(),level1Grid.getTileHeightPixels());
-  // enemy = loadImage("images/articuno.png");
+  enemy = loadImage("images/bomb.png");
   // enemy.resize(100,100);
   exampleAnimationSetup();
 
@@ -227,15 +227,22 @@ public void updateScreen(){
 public void populateSprites(){
 
   //What is the index for the last column?
-  
+  int lastCol = level1Grid.getNumCols() -1; 
 
   //Loop through all the rows in the last column
+  for(int r=0; r<level1Grid.getNumRows(); r++){
+
+    GridLocation loc = new GridLocation(r, lastCol);
 
     //Generate a random number
-
+    double rando = Math.random();
 
     //10% of the time, decide to add an enemy image to a Tile
-    
+    if(rando < 0.1){
+      level1Grid.setTileImage(loc, enemy);
+    }
+
+  }
 
 }
 
