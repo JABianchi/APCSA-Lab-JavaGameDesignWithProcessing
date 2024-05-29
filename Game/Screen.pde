@@ -1,37 +1,45 @@
 /* Screen class - a high level class that handles background screens & millisecond timing
  * Has a World Subclass
- * Author: Joel Bianchi
- * Last Edit: 6/6/23
+ * Author: Joel Bianchi & Carey Jiang
+ * Last Edit: 5/28/24
+ * Ability to reset the timer for a particular screen
+ * Added moveable background
  */
 
 public class Screen {
 
-    //Screen fields
+    //------------------ SCREEN FIELDS --------------------//
     private String screenName;
     private PImage bg;
-    private float x;
-    private float y;
-
+    private boolean isMoveable;
+    private Sprite mbg;
+    
     private long startTime;
     private long lastTime = 0;
 
-    //Screen Constructor #1
-    public Screen(String screenName, PImage bg, float x, float y) {
+    //------------------ SCREEN CONSTRUCTORS --------------------//
+
+    //Screen Constructor #1: For background images that move (Coded as a Sprite, not a Processing background PImage)
+    public Screen(String screenName, String movingBgFile, float scale, float x, float y) {
+        this.isMoveable = true;
+        this.setName(screenName);
+        mbg = new Sprite(movingBgFile, scale, x, y);
+        
+        // this.x = x;
+        // this.y = y;
+        startTime = getTotalTime();
+    }
+
+    //Screen Constructor #2: Stationary background image
+    public Screen(String screenName, PImage bg) {
+        this.isMoveable = false;
         this.setName(screenName);
         if(bg != null) {
             this.setBg(bg);
         }
-        this.x = x;
-        this.y = y;
-        startTime = getTotalTime();
     }
 
-    //Screen Constructor #2
-    public Screen(String screenName, PImage bg) {
-        this(screenName, bg, 0.0, 0.0);
-    }
-
-    //Screen Accessors + Mutators
+    //------------------ ACCESSORS & MUTATORS --------------------//
     public void setName(String screenName){
         this.screenName = screenName;
     }
@@ -40,45 +48,53 @@ public class Screen {
     }
 
     public void setBg(PImage bg){
-        this.bg = bg;
-        //background(bg);
+        if(!isMoveable){
+            this.bg = bg;
+            //background(bg);
+        }
     }
     public PImage getBg(){
         return bg;
     }
-    
-    public void setX(float x) {
-        this.x = x;
-    }
-    public float getX() {
-        return x;
-    }
 
-    public void setY(float y) {
-        this.y = y;
-    }
-    public float getY() {
-        return y;
-    }
 
-    //???
-    public void setScreenSize(int w, int h){
+    //------------------ SCREEN MOVING METHODS --------------------//
 
-    }
-
-    public String toString(){
-        return "Screen: " + screenName + " at " + x + "," + y;
-    }
-
-    public void pause(final int milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (final Exception e) {
-            System.out.println(e);
+    //move the background image in the X direction
+    public void moveBgXY(float speedX, float speedY){
+        if(isMoveable){
+            mbg.move(speedX, speedY);
+        } else {
+            System.out.println("Can't move this background");
         }
     }
 
-    //SCREEN TIME METHODS
+    public void setLeftX(float leftX) {
+        mbg.setLeft(leftX);
+    }
+    public float getLeftX() {
+        return mbg.getLeft();
+    }
+
+    public void setTopY(float topY) {
+        mbg.setTop(topY);
+    }
+    public float getTopY() {
+        return mbg.getTop();
+    }
+
+    //updates any movement of the background
+    public void show(){
+        if(isMoveable){
+            mbg.show();
+            //System.out.println("Showing mbg");
+        }
+    }
+
+
+
+    //------------------ SCREEN TIME METHODS --------------------//
+
     public long getTotalTime(){
         return millis();  //milliseconds world
     }
@@ -91,5 +107,26 @@ public class Screen {
     public float getScreenTimeSeconds(){
         return getScreenTime() / 1000.0f;
     }
+    
+    //pauses ALL screen methods!
+    public void pause(final int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (final Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    //resets the timer for the screen
+    public void resetTime(){
+        startTime = getTotalTime();
+    }
+
+
+
+    public String toString(){
+        return "Screen: " + screenName + " at LeftX:" + getLeftX() + " ,TopY:" + getTopY() ;
+    }
+
 
 }

@@ -1,18 +1,20 @@
 /* Grid Class - Used for rectangular-tiled games
  * A 2D array of GridTiles which can be marked
- * Author: Joel Bianchi
- * Last Edit: 6/6/2023
- * Edited to show all Images & Sprites
- * Made a subclass of World
- * Ability to remove marks -RJ
+ * Subclass of World that can show all Images & Sprites
+ * Author: Joel Bianchi & RJ Morel
+ * Last Edit: 5/28/2024
+ * Ability to animate sprites in Grid tiles
  */
 
 public class Grid extends World{
   
+  //------------------ GRID FIELDS --------------------//
   private int rows;
   private int cols;
   private GridTile[][] board;
   
+
+  //------------------ GRID CONSTRUCTORS --------------------//
 
   //Grid constructor #1
   public Grid(String screenName, PImage bg, int rows, int cols){
@@ -39,6 +41,8 @@ public class Grid extends World{
      this(3,3);
   }
 
+
+  //------------------ GRID MARKING METHODS --------------------//
  
   // Method that Assigns a String mark to a location in the Grid.  
   // This mark is not necessarily visible, but can help in tracking
@@ -77,7 +81,7 @@ public class Grid extends World{
     printGrid();
     return isGoodClick;
   } 
-  
+
   //Method that prints out the marks in the Grid to the console
   public void printGrid(){
    
@@ -88,7 +92,10 @@ public class Grid extends World{
       System.out.println();
     } 
   }
-  
+
+
+  //------------------ GRID ACCESSOR METHODS --------------------//
+
   //Method that returns the GridLocation of where the mouse is currently hovering over
   public GridLocation getGridLocation(){
       
@@ -119,7 +126,6 @@ public class Grid extends World{
   public int getY(int row, int col){
     return getY(new GridLocation(row,col));
   }
-
   
   //Accessor method that returns the number of rows in the Grid
   public int getNumRows(){
@@ -140,7 +146,6 @@ public class Grid extends World{
     return pixelHeight/this.rows;
   }
 
-
   //Returns the GridTile object stored at a specified GridLocation
   public GridTile getTile(GridLocation loc){
     return board[loc.getRow()][loc.getCol()];
@@ -151,7 +156,9 @@ public class Grid extends World{
     return board[r][c];
   }
 
-  //------------------PImage Methods ---------------//
+
+  //------------------ GRID TILE IMAGE METHODS --------------------//
+
   //Method that sets the image at a particular tile in the grid & displays it
   public void setTileImage(GridLocation loc, PImage pi){
     GridTile tile = getTile(loc);
@@ -181,6 +188,7 @@ public class Grid extends World{
     GridTile tile = getTile(loc);
     if(tile.hasImage()){
       image(tile.getImage(),getX(loc),getY(loc));
+      //System.out.println("Showing " + tile.getImage() + " at " + loc);
     }
   }
 
@@ -202,7 +210,9 @@ public class Grid extends World{
       }
   }
 
-  //------------------AnimatedSprite Methods ---------------//
+
+  //------------------  GRID ANIMATED SPRITES METHODS --------------------//
+
   //Method that sets the Sprite at a particular tile in the grid & displays it
   public void setTileSprite(GridLocation loc, AnimatedSprite sprite){
     GridTile tile = getTile(loc);
@@ -236,6 +246,13 @@ public class Grid extends World{
     setTileSprite(loc,null);
   }
 
+  //Method that clears the tile image
+  public void animateTileSprite(GridLocation loc){
+    AnimatedSprite aSprite = getTileSprite(loc);
+    aSprite.animate();
+    //System.out.println("animating");
+  }
+
   public void showTileSprite(GridLocation loc){
     GridTile tile = getTile(loc);
     if(tile.hasSprite()){
@@ -256,7 +273,8 @@ public class Grid extends World{
           
           //Check if the tile has an image
           if(hasTileSprite(tempLoc)){
-            setTileSprite(tempLoc, getTileSprite(tempLoc));
+            //setTileSprite(tempLoc, getTileSprite(tempLoc));
+            animateTileSprite(tempLoc);
             //showTileSprite(tempLoc);
           }
         }
@@ -264,11 +282,11 @@ public class Grid extends World{
   }
 
   //Method to clear the screen from all Images & Sprites
-    public void clearGrid(){
+  public void clearGrid(){
 
-      //Loop through all the Tiles and display its images/sprites
-        for(int r=0; r<getNumRows(); r++){
-          for(int c=0; c<getNumCols(); c++){
+    //Loop through all the Tiles and display its images/sprites
+      for(int r=0; r<getNumRows(); r++){
+        for(int c=0; c<getNumCols(); c++){
 
             //Store temporary GridLocation
             GridLocation tempLoc = new GridLocation(r,c);
@@ -277,12 +295,10 @@ public class Grid extends World{
             if(hasTileSprite(tempLoc)){
               setTileSprite(tempLoc, getTileSprite(tempLoc));
               //showTileSprite(tempLoc);
+    
             }
           }
         }
     }
-
-
-
 
 }
