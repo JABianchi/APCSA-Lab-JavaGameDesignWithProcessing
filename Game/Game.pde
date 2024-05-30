@@ -40,7 +40,7 @@ Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
 World level2World;
 PImage level2Bg;
 String level2BgFile = "images/sky.jpg";
-Sprite player2;   //Use PImage to display the image in a GridLocation
+Sprite player2; //Use Sprite for a pixel-based Location
 String player2File = "images/zapdos.png";
 int player2startX = 50;
 int player2startY = 300;

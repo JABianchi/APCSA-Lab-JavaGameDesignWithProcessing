@@ -97,11 +97,6 @@ public class World extends Screen{
     showWorldSprites();
   }
 
-  //method to get ArrayList of all sprites in World
-  // public ArrayList<Sprite> getSprites(){
-  //   return sprites;
-  // }
-
   //method to print out list of sprites
   public void printWorldSprites(){
       for(Sprite sprite: sprites){
