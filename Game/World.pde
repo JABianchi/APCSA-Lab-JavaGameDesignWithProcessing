@@ -1,8 +1,9 @@
 /* World Class - Used to describe the screen of a pixel-based game
- * Subclass of a Screen, includes an ArrayList of AnimatedSprite objects
+ * Subclass of a Screen, includes an ArrayList of Sprite objects
  * Authors: Joel Bianchi, Nathan Santos, Clive Sherwood
- * Last Edit: 5/28/2024
+ * Last Edit: 5/29/2024
  * Added Constructor for Moveable Backgrounds
+ * Adjusted variables for general Sprites
  */
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class World extends Screen{
 
   //------------------ WORLD FIELDS --------------------//
   //private static World currentWorld = null; //static variable to track the current world
-  private ArrayList<AnimatedSprite> sprites = new ArrayList<AnimatedSprite>();
+  private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
   long lastSpriteUpdateTime = 0;
 
   //------------------ WORLD CONSTRUCTORS --------------------//
@@ -35,41 +36,65 @@ public class World extends Screen{
 
 
   //------------------ WORLD SPRITE METHODS --------------------//
-  public ArrayList<AnimatedSprite> getSprites(){
+  public ArrayList<Sprite> getSprites(){
       return sprites;
   }
 
   //method to add a sprite to the world
-  public void addSprite(AnimatedSprite sprite) {
+  public void addSprite(Sprite sprite) {
     if (!sprites.contains(sprite)) {
       sprites.add(sprite);
     }
   }
 
   //method to add a copy of a sprite to a specific coordinate in the world
-  public void addSpriteCopyTo(AnimatedSprite sprite, float x, float y) {
+  public void addSpriteCopyTo(Sprite sprite, float x, float y) {
+    if(sprite.getIsAnimated()){
+      sprites.add( ((AnimatedSprite)sprite).copyTo(x,y));
+    }
     sprites.add(sprite.copyTo(x,y));
   }
 
   //method to add a copy of a sprite to the world
-  public void addSpriteCopy(AnimatedSprite sprite) {
+  public void addSpriteCopy(Sprite sprite) {
+    if(sprite.getIsAnimated()){
+      sprites.add(((AnimatedSprite)sprite).copy());
+    }
     sprites.add(sprite.copy());
   }
 
+  //method to add a copy of a sprite to a specific coordinate in the world
+  public void addSpriteCopyTo(Sprite sprite, float x, float y, float aSpeed) {
+    if(sprite.getIsAnimated()){
+      sprites.add( ((AnimatedSprite)sprite).copyTo(x, y, aSpeed));
+    }
+    sprites.add(sprite.copyTo(x,y));
+  }
+
   //method to remove a sprite from the world
-  public void removeSprite(AnimatedSprite sprite) {
+  public void removeSprite(Sprite sprite) {
     if (sprites.contains(sprite)) {
       sprites.remove(sprite);
     }
   }
 
   //method to display all the sprites on the screen
-  public void showSprites(){
+  public void showWorldSprites(){
     //System.out.println("showing sprites...");
     //Loop through all the sprites
-    for(AnimatedSprite sprite : sprites){
-        sprite.show();        
+    for(Sprite sprite : sprites){
+      if(sprite.getIsAnimated()){
+        AnimatedSprite aSprite = (AnimatedSprite) sprite;
+        aSprite.animate();
+        //System.out.println("aSprite: " + aSprite.getJsonFile() + "\t" + aSprite.iBucket + "\t" + aSprite.aSpeed);
+      } else{
+        sprite.show();
+      }
     }
+  }
+  //to deprecate
+  public void showSprites(){
+    showWorldSprites();
   }
 
   //method to get ArrayList of all sprites in World
@@ -78,10 +103,14 @@ public class World extends Screen{
   // }
 
   //method to print out list of sprites
-  public void printSprites(){
+  public void printWorldSprites(){
       for(Sprite sprite: sprites){
           System.out.println(sprite);
       }
+  }
+  //to deprecate
+  public void printSprites(){
+    printWorldSprites();
   }
 
 
@@ -90,7 +119,7 @@ public class World extends Screen{
   //method to update all sprites in the world each cycle
   public void update() {
     long deltaTime = getTimeSince(lastSpriteUpdateTime);
-    for (AnimatedSprite sprite : sprites) {
+    for (Sprite sprite : sprites) {
       sprite.update(deltaTime);
     }
     lastSpriteUpdateTime = getScreenTime();

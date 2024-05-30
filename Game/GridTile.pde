@@ -2,8 +2,8 @@
  * GridTiles have distinguishable marks that will be printed out to the console for easy visualization of a 2D array
  * GridTiles can indicate if they have been "captured", colored, or are displaying an image
  * Authors: Joel Bianchi, Naomi Gaylor, Ezzeldin Moussa
- * Last Edit: 6/6/2023
- * Edited to be superclass of HexTile, included hasImage() function
+ * Last Edit: 5/29/24
+ * Functioning with Sprites and AnimatedSprites
  */
 
 import java.awt.Color;
@@ -12,7 +12,7 @@ public class GridTile{
   
   private GridLocation location;
   private PImage pi;
-  private AnimatedSprite sprite;
+  private Sprite sprite;
   private boolean coveredPic;
   private color fillColor;
   final color defaultFillColor = #FFFFFF; //WHITE
@@ -107,17 +107,17 @@ public class GridTile{
   }
 
   //------------------Sprite Methods ---------------//
- // Mutator method that sets a new AnimatedSprite in the GridTile
-  public void setSprite(AnimatedSprite sprite){
+ // Mutator method that sets a new Sprite in the GridTile
+  public void setSprite(Sprite sprite){
     this.sprite = sprite;
   }
 
-  //Accessor method that returns the AnimatedSprite stored in the GridTile
-  public AnimatedSprite getSprite(){
+  //Accessor method that returns the Sprite stored in the GridTile
+  public Sprite getSprite(){
     return sprite;
   }
 
-  //Method to check if the GridTile has an AnimatedSprite in it
+  //Method to check if the GridTile has an Sprite in it
   public boolean hasSprite(){
     if(sprite == null){
       return false;

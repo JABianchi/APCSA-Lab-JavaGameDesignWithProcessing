@@ -2,7 +2,8 @@
  * A 2D array of GridTiles which can be marked
  * Subclass of World that can show all Images & Sprites
  * Author: Joel Bianchi & RJ Morel
- * Last Edit: 5/28/2024
+ * Last Edit: 5/29/2024
+ * Working with regular Sprites
  * Ability to animate sprites in Grid tiles
  */
 
@@ -12,6 +13,7 @@ public class Grid extends World{
   private int rows;
   private int cols;
   private GridTile[][] board;
+  private boolean printingGridMarks = false;
   
 
   //------------------ GRID CONSTRUCTORS --------------------//
@@ -49,7 +51,9 @@ public class Grid extends World{
   // what you want recorded at each GridLocation.
   public void setMark(String mark, GridLocation loc){
     board[loc.getRow()][loc.getCol()].setNewMark(mark);
-    printGrid();
+    if(printingGridMarks){
+      printGrid();
+    }
   } 
   
   //Method to get the mark value at a location -RJ Morel
@@ -78,19 +82,27 @@ public class Grid extends World{
     int row = loc.getRow();
     int col = loc.getCol();
     boolean isGoodClick = board[row][col].setNewMark(mark);
-    printGrid();
+    if(printingGridMarks){
+      printGrid();
+    }
     return isGoodClick;
   } 
 
   //Method that prints out the marks in the Grid to the console
   public void printGrid(){
-   
     for(int r = 0; r<rows; r++){
       for(int c = 0; c<cols; c++){
          System.out.print(board[r][c]);
       }
       System.out.println();
     } 
+  }
+
+  public void startPrintingGridMarks(){
+    printingGridMarks = true;
+  }
+  public void stopPrintingGridMarks(){
+    printingGridMarks = false;
   }
 
 
@@ -115,6 +127,9 @@ public class Grid extends World{
   public int getX(int row, int col){
     return getX(new GridLocation(row, col));
   }
+  public int getCenterX(GridLocation loc){
+    return getX(loc) + getTileWidth()/2;
+  }
   
   //Accessor method that provide the y-pixel value given a GridLocation loc
   public int getY(GridLocation loc){
@@ -125,6 +140,9 @@ public class Grid extends World{
   }
   public int getY(int row, int col){
     return getY(new GridLocation(row,col));
+  }
+  public int getCenterY(GridLocation loc){
+    return getY(loc) + getTileHeight()/2;
   }
   
   //Accessor method that returns the number of rows in the Grid
@@ -138,11 +156,11 @@ public class Grid extends World{
   }
 
   //Accessor method that returns the width of 1 Tile in the Grid
-  public int getTileWidthPixels(){
+  public int getTileWidth(){
     return pixelWidth/this.cols;
   }
   //Accessor method that returns the height of 1 Tile in the Grid
-  public int getTileHeightPixels(){
+  public int getTileHeight(){
     return pixelHeight/this.rows;
   }
 
@@ -193,7 +211,7 @@ public class Grid extends World{
   }
 
   //Method to show all the PImages stored in each GridTile
-  public void showImages(){
+  public void showGridImages(){
 
     //Loop through all the Tiles and display its images/sprites
       for(int r=0; r<getNumRows(); r++){
@@ -209,27 +227,33 @@ public class Grid extends World{
         }
       }
   }
+  //to be deprecated
+  public void showImages(){
+    showGridImages();
+  }
 
 
-  //------------------  GRID ANIMATED SPRITES METHODS --------------------//
+  //------------------  GRID SPRITES METHODS --------------------//
 
   //Method that sets the Sprite at a particular tile in the grid & displays it
-  public void setTileSprite(GridLocation loc, AnimatedSprite sprite){
+  public void setTileSprite(GridLocation loc, Sprite sprite){
     GridTile tile = getTile(loc);
     if(sprite == null){
       tile.setSprite(null);
       //System.out.println("Cleared tile @ " + loc);
       return;
     }
-    sprite.setLeft(getX(loc));
-    sprite.setTop(getY(loc));
+    // sprite.setLeft(getX(loc));
+    // sprite.setTop(getY(loc));
+    sprite.setCenterX(getCenterX(loc));
+    sprite.setCenterY(getCenterY(loc));
     tile.setSprite(sprite);
     showTileSprite(loc);
     //System.out.println("Succcessfully set tile @ " + loc);
   }
   
   //Method that returns the PImage associated with a particular Tile
-  public AnimatedSprite getTileSprite(GridLocation loc){
+  public Sprite getTileSprite(GridLocation loc){
     GridTile tile = getTile(loc);
     //System.out.println("Grid.getTileSprite() " + tile.getSprite());
     return tile.getSprite();
@@ -246,17 +270,21 @@ public class Grid extends World{
     setTileSprite(loc,null);
   }
 
-  //Method that clears the tile image
+  //Method that checks for an AnimatedSprite and animates it
   public void animateTileSprite(GridLocation loc){
-    AnimatedSprite aSprite = getTileSprite(loc);
-    aSprite.animate();
-    //System.out.println("animating");
+    try{
+      AnimatedSprite aSprite = (AnimatedSprite)getTileSprite(loc);
+      aSprite.animate();
+      //System.out.println("animating");
+    } catch (Exception e) {
+      System.out.println("Is your Sprite an AnimatedSprite?\n"+e);
+    }
   }
 
   public void showTileSprite(GridLocation loc){
     GridTile tile = getTile(loc);
     if(tile.hasSprite()){
-      tile.getSprite().animate();
+      tile.getSprite().show();
     }
   }
 
@@ -273,9 +301,14 @@ public class Grid extends World{
           
           //Check if the tile has an image
           if(hasTileSprite(tempLoc)){
-            //setTileSprite(tempLoc, getTileSprite(tempLoc));
-            animateTileSprite(tempLoc);
-            //showTileSprite(tempLoc);
+
+            //check if Sprite is Animated
+            if(getTileSprite(tempLoc).getIsAnimated()){
+              animateTileSprite(tempLoc);
+            } else {
+              //setTileSprite(tempLoc, getTileSprite(tempLoc));
+              showTileSprite(tempLoc);
+            }
           }
         }
       }

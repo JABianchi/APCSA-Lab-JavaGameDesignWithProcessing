@@ -1,6 +1,7 @@
 /* Button Class - Used to add a button into a Game
  * Author: Joel Bianchi
- * Last Edit: 5/28/2024
+ * Last Edit: 5/29/2024
+ * Fixed centering of button hover
  */
 
 
@@ -106,8 +107,8 @@ public class Button {
     }
     
     private boolean isOverRect(){
-        if(mouseX >= shapeX && mouseX <= shapeX+shapeW
-            && mouseY >= shapeY && mouseY <= shapeY+shapeH){
+        if(mouseX >= shapeX-shapeW/2 && mouseX <= shapeX+shapeW/2
+            && mouseY >= shapeY-shapeH/2 && mouseY <= shapeY+shapeH/2){
             return true;
         } else {
             return false;
