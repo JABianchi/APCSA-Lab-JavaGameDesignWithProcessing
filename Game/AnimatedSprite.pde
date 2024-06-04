@@ -3,10 +3,10 @@
  * https://free-tex-packer.com/app/
  * Inspired by Daniel Shiffman's p5js Animated Sprite tutorial: https://youtu.be/3noMeuufLZY
  * Authors: Joel Bianchi, Aiden Sing, Tahlei Richardson
- * Last Edit: 6/5/2023
- * Edited jsonFile renamed to jsonFile
- * Revised Variable to track animation speed
- * Sprite Copying
+ * Last Edit: 5/29/24
+ * Removed Legacy Constructors
+ * Added setSpeed() method
+ * Adjusted copyTo() to include aSpeed parameter
  */
  
 public class AnimatedSprite extends Sprite{
@@ -15,8 +15,8 @@ public class AnimatedSprite extends Sprite{
     private String jsonFile;
     private ArrayList<PImage> animation;
     private int len;
-    private float iBucket;
-    private float aSpeed; //variable to track how quickly the animation images cycle
+    float iBucket;
+    float aSpeed; //variable to track how quickly the animation images cycle
 
     JSONObject spriteData;
     PImage spriteSheet;
@@ -32,6 +32,7 @@ public class AnimatedSprite extends Sprite{
     super.setH(this.animation.get(0).height);
     super.setLeft(x);
     super.setTop(y);
+    this.aSpeed = aSpeed;
     //System.out.println("AS w: " + super.getW() + ",h: " + super.getH());
 
   }
@@ -43,12 +44,7 @@ public class AnimatedSprite extends Sprite{
 
   // Constructor #3 taking in images and json only
   public AnimatedSprite(String png, String json) {
-    this(png, 0.0, 0.0, json);
-  }
-
-  // Legacy Constructor for 2022 version
-  public AnimatedSprite(String png, float x, float y, String json) {
-    this(png, json, x, y);
+    this(png, json, 0.0, 0.0, 1.0);
   }
 
 
@@ -60,9 +56,15 @@ public class AnimatedSprite extends Sprite{
     //System.out.println("Pos: "+ super.getX() +"," + super.getY());
   } 
 
+
+  //Method to set the speed of how fast the frames cycle
+  public void setSpeed(float animationSpeed){
+    this.aSpeed = animationSpeed;
+  }
+
   //Method to cycle through the images of the animated sprite & reset a new animation speed
   public void animate(float animationSpeed){
-    this.aSpeed = animationSpeed;
+    setSpeed(animationSpeed);
     animate();
   }
 
@@ -102,7 +104,7 @@ public class AnimatedSprite extends Sprite{
     animateMove(0, verticalSpeed, animationSpeed, wraparound);
   }
 
-  //NIKO + JAIDEN
+  //- Niko Baletin + Jaiden Kelly, 2023
   public void animateToPlayer(AnimatedSprite player, float animationSpeed, boolean wraparound) {
     float xDifference = player.getCenterX() - this.getCenterX();
     float yDifference = player.getCenterY() - this.getCenterY();
@@ -140,6 +142,12 @@ public class AnimatedSprite extends Sprite{
   public AnimatedSprite copyTo(float x, float y){
     //super.copy();
     return new AnimatedSprite(this.pngFile, this.jsonFile, x, y, this.aSpeed);
+  }
+
+  //Method to copy an AnimatedSprite to a specific location with a new speed
+  public AnimatedSprite copyTo(float x, float y, float aSpeed){
+    //super.copy();
+    return new AnimatedSprite(this.pngFile, this.jsonFile, x, y, aSpeed);
   }
   
 
@@ -182,7 +190,7 @@ public class AnimatedSprite extends Sprite{
         int sY = fr.getInt("y");
         int sW = fr.getInt("w");
         int sH = fr.getInt("h");
-        System.out.println(i + ":\t sX:" + sX + ":\t sY:" + sY + ":\t sW:" + sW + ":\t sH:" + sH);
+        //System.out.println(i + ":\t sX:" + sX + ":\t sY:" + sY + ":\t sW:" + sW + ":\t sH:" + sH);
         PImage img = spriteSheet.get(sX, sY, sW, sH);
         ani.add(img);
 
