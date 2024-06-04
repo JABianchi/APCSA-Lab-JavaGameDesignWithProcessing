@@ -23,18 +23,22 @@ title: APCSA Java Game Design with Processing
 email: MisterBianchi@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Use this Java-Processing framework to make a game using skills learned from your APCSA course
-# baseurl: "/docs/" # the subpath of your site, e.g. /blog
-# url: "https://jabianchi.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/docs" # the subpath of your site, e.g. /blog
+url: "https://jabianchi.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 # github_username:  jekyll
 
 # Build settings
-theme: minima #jekyll-theme-dinky #tactile, slate, modernist, minimal, minima, dinky
-# remote_theme: pages-themes/slate@v0.2.0
+# theme: minimal-mistakes-jekyll
+theme: just-the-docs
+#theme: minima
+
 plugins:
   # - jekyll-feed
   # - jekyll-remote-theme
+  - jekyll-include-cache
 
+markdown: kramdown
 
 
 # Exclude from processing.
