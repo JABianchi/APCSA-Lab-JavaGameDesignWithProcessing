@@ -16,7 +16,7 @@ public class Game extends PApplet{
   PApplet p;
 
   // VARIABLES: Title Bar
-  String titleText = "PeanutChessSkyHorse2";
+  String titleText = "ConnectHorse";
   String extraText = "CurrentLevel?";
   String name = "";
 
@@ -34,7 +34,7 @@ public class Game extends PApplet{
   Grid level1Grid;
   String level1BgFile = "images/chess.jpg";
   PImage level1Bg;
-  String player1File = "images/x_wood.png";
+  String player1File = "images/redhorse.png";
   PImage player1;   // Use PImage to display the image in a GridLocation
   int player1Row = 3;
   int player1Col = 0;
@@ -260,7 +260,7 @@ public class Game extends PApplet{
 
     if(!isGameOver()) {
       //set the title each loop
-      // p.surface.setTitle(titleText + "    " + extraText + " " + name + ": " + health);
+      // surface.setTitle(titleText + "    " + extraText + " " + name + ": " + health);
 
       //adjust the extra text as desired
     
