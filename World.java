@@ -1,8 +1,8 @@
 /* World Class - Used to describe the screen of a pixel-based game
  * Subclass of a Screen, includes an ArrayList of Sprite objects
  * Authors: Joel Bianchi, Nathan Santos, Clive Sherwood, Vanessa Balbuena
- * Last Edit: 5/10/25
- * Comment Revisions
+ * Last Edit: 5/12/25
+ * Added show method to World
  */
 
 import java.util.ArrayList;
@@ -131,6 +131,12 @@ public class World extends Screen{
   //to deprecate
   public void showSprites(){
     showWorldSprites();
+  }
+
+  // Displays all World + Screen visuals
+  public void show(){
+    // super.showBg();
+    this.showWorldSprites();
   }
 
   // Prints out list of Sprites
