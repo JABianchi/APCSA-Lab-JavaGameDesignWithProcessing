@@ -32,12 +32,13 @@ public class Game extends PApplet{
 
   // VARIABLES: Level1Grid Screen
   Grid level1Grid;
-  String level1BgFile = "images/chess.jpg";
+  String level1BgFile = "images/connect4bg.png";
   PImage level1Bg;
   String player1File = "images/redhorse.png";
   PImage player1;   // Use PImage to display the image in a GridLocation
   int player1Row = 3;
   int player1Col = 0;
+  String player2File = "images/yellowhorse.png";
   int player2Row = 5;
   int player2Col = 5;
   int health = 3;
@@ -101,7 +102,7 @@ public class Game extends PApplet{
 
     //SETUP: Screens, Worlds, Grids
     splashScreen = new Screen(this, "splash", splashBg);
-    level1Grid = new Grid(this, "chessBoard", level1Bg, 6, 8);
+    level1Grid = new Grid(p, "chessBoard", level1Bg, 6, 7);
     //level1Grid.startPrintingGridMarks();
     level2World = new World(p, "sky", level2Bg, 4.0f, 0.0f, -800.0f); //moveable World constructor --> defines center & scale (x, scale, y)???
     System.out.println( "World constructed: " + Util.toStringPImage(level2World.getBgImage()));
@@ -274,15 +275,20 @@ public class Game extends PApplet{
     currentScreen.show();
 
     // UPDATE: splashScreen
-    if(currentScreen == splashScreen && splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+    if(currentScreen == splashScreen){
+      //Display an s in console when splashscreen is up
       System.out.print("s");
-      currentScreen = level1Grid;
+
+      if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+        currentScreen = level1Grid;
+      }
     }
 
     // UPDATE: level1Grid Screen
     if(currentScreen == level1Grid){
+
       System.out.print("1");
-      currentGrid = level1Grid;
+      // currentGrid = level1Grid;
 
       // Displays the player1 image
       GridLocation player1Loc = new GridLocation(player1Row,player1Col);
