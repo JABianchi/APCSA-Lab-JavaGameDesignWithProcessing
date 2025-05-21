@@ -1,7 +1,7 @@
 /* PColor class - provides static variables and methods for Processing colors
  * Author: Joel Bianchi
- * Last Edit: 5/13/25
- * Added RGB accessors
+ * Last Edit: 5/20/25
+ * Added equals method & NULL
  */
 
 import processing.core.PApplet;
@@ -18,6 +18,7 @@ public class PColor {
     public static int CYAN = get(0,255,255); // #00FFFF;
     public static int MAGENTA = get(255,0,255); // #FF00FF;
     public static int YELLOW = get(255,255,0); // #FFFF00;
+    public static int NULL = -1;
 
 
     // Returns a processing color int when provided red, green and blue values (each between 0-255)
@@ -62,6 +63,13 @@ public class PColor {
     public static String getHexString(int color){
         int regularColor = (int)((long)Math.pow(16,6) + color);
         return "#"+String.format("0x%06X", regularColor).substring(2);
+    }
+
+    // Compares the RGB values of 2 colors
+    public boolean equals(PApplet p, int firstColor, int secondColor) {
+        return getRed(p, firstColor) == getRed(p, secondColor) 
+            && getGreen(p, firstColor) == getGreen(p, secondColor)
+            && getBlue(p, firstColor) == getBlue(p, secondColor);
     }
 
 

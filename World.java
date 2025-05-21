@@ -1,8 +1,8 @@
 /* World Class - Used to describe the screen of a pixel-based game
  * Subclass of a Screen, includes an ArrayList of Sprite objects
  * Authors: Joel Bianchi, Nathan Santos, Clive Sherwood, Vanessa Balbuena
- * Last Edit: 5/12/25
- * Added show method to World
+ * Last Edit: 5/20/25
+ * Added gravity to World
  */
 
 import java.util.ArrayList;
@@ -31,16 +31,17 @@ public class World extends Screen{
     this(p, "default world", null);
   }
 
-  // World Constructor #4 for Moveable Backgrounds (not working!)
-  // public World(PApplet p, String name, String movingBgFile, float scale, float x, float y) {
-  //    super(p, name, movingBgFile, scale, x, y);
-  // }
-
-  // World Constructor #5: Creates a World with a moving background.  Image can be scaled to be bigger so the background doesn't run out too quickly!
-  public World(PApplet p, String name, PImage movingBg, float scale, float x, float y) {
-    super(p, name, movingBg, scale, x, y);
-    System.out.println("World " + name + " constructed with " + Util.toStringPImage(movingBg));
+  // World Constructor #4 for Moveable Backgrounds: Image can be scaled to be bigger so the background doesn't run out too quickly
+  public World(PApplet p, String name, String movingBgFile, float scale, float x, float y) {
+    super(p, name, movingBgFile, scale, x, y);
+    System.out.println("World " + name + " constructed with " + movingBgFile);
   }
+
+  // World Constructor #5: Creates a World with a moving background.  (not working!)
+  // public World(PApplet p, String name, PImage movingBg, float scale, float x, float y) {
+  //   super(p, name, movingBg, scale, x, y);
+  //   System.out.println("World " + name + " constructed with " + Util.toStringPImage(movingBg));
+  // }
 
 
   //------------------ WORLD SPRITE METHODS --------------------//
@@ -137,6 +138,7 @@ public class World extends Screen{
   public void show(){
     // super.showBg();
     this.showWorldSprites();
+    this.update();  // adds physics into the World
   }
 
   // Prints out list of Sprites

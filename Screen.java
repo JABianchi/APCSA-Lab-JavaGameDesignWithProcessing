@@ -53,6 +53,7 @@ public class Screen{
         this.isMoveable = true;
         this.setName(screenName);
         mbg = new Sprite(p, movingBg, scale, x, y);
+        System.out.println("Screen constructed with " + mbg.getImagePath() + "\t" + mbg);
         startTime = getTotalTime();
     }
 
@@ -146,6 +147,10 @@ public class Screen{
 
     //------------------ SCREEN TIME METHODS --------------------//
 
+    // //
+    // public static long getGameTime(){
+    //     return p.millis();
+    // }
     // Returns the total number of milliseconds the game has been running
     public long getTotalTime(){
         return p.millis();

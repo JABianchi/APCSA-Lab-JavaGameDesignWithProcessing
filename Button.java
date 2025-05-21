@@ -1,12 +1,13 @@
 /* Button Class - Used to add a button into a Game
  * Author: Joel Bianchi
- * Last Edit: 5/13/25
- * PColor edits
- * Capital Letter bug fix
+ * Last Edit: 5/20/25
+ * Font edits
  */
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import java.awt.Font;
+import java.io.InputStream;
 
 
 public class Button {
@@ -36,7 +37,7 @@ public class Button {
 
     //------------------ BUTTON CONSTRUCTORS --------------------//
 
-    //Button Constructor #1
+    //Button Constructor
     public Button(PApplet p, String shape, float x, float y, float w, float h, String text) {
 
         this.p = p;
@@ -59,7 +60,8 @@ public class Button {
         this.currentColor = baseColor;
         this.outlineColor = PColor.BLACK;
         this.isVisible = true;
-        this.font = p.createFont("fonts/Helvetica", fontSize); //"Helvetica", "Georgia"
+        this.fontStyle = "Georgia"; //"Arial", "Courier New", "Georgia"
+        this.font = p.createFont(fontStyle, fontSize);
     }
 
 
@@ -67,7 +69,7 @@ public class Button {
 
     //Button method to be called each cycle -- ie. inside draw() or updateScreen() 
     public void show() {
-        
+    
         //Sets outline stroke around button (3 pixels, BLACK)
         p.strokeWeight(2);
         p.stroke(outlineColor);
@@ -165,7 +167,9 @@ public class Button {
     public void setFontStyle(String fontStyleFile){
         this.fontStyle = fontStyleFile;
         this.font = p.createFont(fontStyleFile, fontSize);
+        System.out.println("font is " + font );
     }
+
     public void setFontFactor(float ff){
         this.fontFactor = ff;
     }
