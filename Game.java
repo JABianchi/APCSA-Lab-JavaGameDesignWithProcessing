@@ -53,10 +53,10 @@ public class Game extends PApplet{
   World level2World;
   String level2BgFile = "images/sky.png";
   PImage level2Bg;
-  String player20File = "images/zapdos.png";
-  Sprite player20; //Use Sprite for a pixel-based Location
-  int player20startX = 50;
-  int player20startY = 300;
+  String zapdosFile = "images/zapdos.png";
+  Sprite zapdos; //Use Sprite for a pixel-based Location
+  int zapdosStartX = 50;
+  int zapdosStartY = 300;
 
   //VARIABLES: Level3World Pixel-based Platformer
   World level3World;
@@ -140,8 +140,8 @@ public class Game extends PApplet{
     System.out.println("Done loading Level 1 ...");
     
     //SETUP: Level 2
-    player20 = new Sprite(p, player20File, 0.25f);
-    player20.moveTo(player20startX, player20startY);
+    zapdos = new Sprite(p, zapdosFile, 0.25f);
+    zapdos.moveTo(zapdosStartX, zapdosStartY);
     level2World.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
     level2World.printWorldSprites();
     System.out.println("Done loading Level 2 ...");
@@ -207,23 +207,26 @@ public class Game extends PApplet{
     //check what key was pressed
     System.out.println("\nKey pressed: " + p.keyCode); //key gives you a character for the key pressed
 
-    //What to do when a key is pressed?
+    //What to do when a key is pressed?tt
     
     //KEYS FOR LEVEL1
     if(currentScreen == level1Grid){
 
-      //set [W] key to move the player1 up & avoid Out-of-Bounds errors
+      //set [S] key to move the player1 up & avoid Out-of-Bounds errors
       if(p.keyCode == 83){
-      
-        //Store old GridLocation
-        GridLocation oldLoc = new GridLocation(player2Row, player2Col);
-        
-        //Erase image from previous location
-        
-
-        //change the field for player2Row
         player2Row++;
       }
+      else if(p.key == 'a' && player2Col !=0){
+        player2Col--;
+      }
+      else if(p.key == 'w'){
+        if(player2Row == 0){
+          player2Row = level1Grid.getNumRows()-1;
+        } else {
+            player2Row--;
+        }
+      }
+      
 
       // if the 'n' key is pressed, ask for their name
       if(p.key == 'n'){
@@ -238,6 +241,16 @@ public class Game extends PApplet{
       }
 
 
+
+    }
+
+    //KEYS FOR LEVEL 2
+    if(currentScreen == level2World){
+      if(p.key == 'a'){
+        zapdos.move(-5,0);
+      } else if (p.keyCode == 32){
+        zapdos.setSpeed(10,0);
+      }
 
     }
 
@@ -350,7 +363,7 @@ public class Game extends PApplet{
       System.out.print("2");
 
       level2World.moveBgXY(-0.3f, 0f);  //adjust speeds of moving backgrounds, -3.0f for 100 ms delays
-      player20.show();
+      zapdos.show();
 
     }
 
