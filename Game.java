@@ -1,6 +1,6 @@
 /* Game Class Starter File
  * Authors: Joel A. Bianchi
- * Last Edit: 5/20/25
+ * Last Edit: 5/22/25
  * using new Screen show() method
  * Eliminate usage of currentWorld & currentGrid
  * Use of CycleTimer for draw loop
@@ -22,52 +22,53 @@ public class Game extends PApplet{
   // VARIABLES: Title Bar
   String titleText = "ConnectHorse";
   String extraText = "CurrentLevel?";
-  String name = "";
+  String name = "Undefined";
 
   // VARIABLES: Whole Game
   AnimatedSprite runningHorse;
   boolean doAnimation;
 
-  // VARIABLES: Splash Screen
+  // VARIABLES: splashScreen
   Screen splashScreen;
   PImage splashBg;
   String splashBgFile = "images/apcsa.png";
   //SoundFile song;
 
-  // VARIABLES: Level1Grid Screen
-  Grid level1Grid;
-  String level1BgFile = "images/connect4bg.png";
-  PImage level1Bg;
-  String player1File = "images/redhorse.png";
-  PImage player1;   // Use PImage to display the image in a GridLocation
-  int player1Row = 3;
-  int player1Col = 0;
-  String player2File = "images/yellowhorse.png";
-  int player2Row = 0;
-  int player2Col = 2;
+  // VARIABLES: grid1 Screen (pieces on a grid pattern)
+  Grid grid1;
+  PImage grid1Bg;
+  String grid1BgFile = "images/connect4bg.png";
+  PImage piece1;   // Use PImage to display the image in a GridLocation
+  String piece1File = "images/redhorse.png";
+  int piece1Row = 3;
+  int piece1Col = 0;
+  AnimatedSprite chick;
+  String chickFile = "sprites/chick_walk.png";
+  String chickJson = "sprites/chick_walk.json";
+  int chickRow = 0;
+  int chickCol = 2;
   int health = 3;
-  AnimatedSprite player2;
   Button b1;
 
-  // VARIABLES: Level2World Pixel-based Screen
-  World level2World;
-  String level2BgFile = "images/sky.png";
-  PImage level2Bg;
-  String zapdosFile = "images/zapdos.png";
+  // VARIABLES: skyWorld Screen (characters move by pixels)
+  World skyWorld;
+  PImage skyWorldBg;
+  String skyWorldBgFile = "images/sky.png";
   Sprite zapdos; //Use Sprite for a pixel-based Location
+  String zapdosFile = "images/zapdos.png";
   int zapdosStartX = 50;
   int zapdosStartY = 300;
 
-  //VARIABLES: Level3World Pixel-based Platformer
-  World level3World;
-  String level3BgFile = "images/wall.jpg";
-  PImage level3Bg;
+  //VARIABLES: brickWorld Screen (characters jump on platforms with gravity)
+  World brickWorld;
+  PImage brickWorldBg;
+  String brickWorldBgFile = "images/wall.jpg";
   Platform plat;
 
-  // VARIABLES: EndScreen
+  // VARIABLES: endScreen
   World endScreen;
-  String endBgFile = "images/youwin.png";
   PImage endBg;
+  String endBgFile = "images/youwin.png";
 
 
   // VARIABLES: Tracking the current Screen being displayed
@@ -100,61 +101,58 @@ public class Game extends PApplet{
 
     //SETUP: Load BG images used in all screens
     splashBg = p.loadImage(splashBgFile);
-    splashBg.resize(p.width, p.height);
-    level1Bg = p.loadImage(level1BgFile);
-    level1Bg.resize(p.width, p.height);
-    level2Bg = p.loadImage(level2BgFile);
-    //level2Bg.resize(p.width, p.height);
+    grid1Bg = p.loadImage(grid1BgFile);
+    skyWorldBg = p.loadImage(skyWorldBgFile);
+    brickWorldBg = loadImage(brickWorldBgFile);
     endBg = p.loadImage(endBgFile);
-    endBg.resize(p.width, p.height);
 
-    //SETUP: Screens, Worlds, Grids
-    splashScreen = new Screen(p, "splash", splashBg);
-    level1Grid = new Grid(p, "chessBoard", level1Bg, 6, 7);
-    // level1Grid.startPrintingGridMarks();
-    level2World = new World(p, "sky", level2BgFile, 4.0f, 0.0f, -800.0f); //moveable World constructor --> defines center & scale (x, scale, y)???
-    
-    System.out.println( "World constructed: " + Util.toStringPImage(level2World.getBgImage()));
-       
-    // level2World = new World("sky", level2Bg);   //non-moving World construtor
+    //SETUP: If non-moving, Resize all BG images to exactly match the screen size
+    splashBg.resize(p.width, p.height);
+    grid1Bg.resize(p.width, p.height);
+    brickWorldBg.resize(p.width, p.height);
+    endBg.resize(p.width, p.height);   
+
+    //SETUP: Construct each Screen, World, Grid
+    splashScreen = new Screen(p, "splash", splashBg);       
+    grid1 = new Grid(p, "chessBoard", grid1Bg, 6, 7);
+    skyWorld = new World(p, "sky", skyWorldBgFile, 4.0f, 0.0f, -800.0f); //moveable World constructor
+    brickWorld = new World(p,"platformer", brickWorldBg);
     endScreen = new World(p, "end", endBg);
     currentScreen = splashScreen;
 
-    //SETUP: All Game objects
+    //SETUP: Construct Game objects used in All Screens
     runningHorse = new AnimatedSprite(p, "sprites/horse_run.png", "sprites/horse_run.json", 50.0f, 75.0f, 1.0f);
 
-    //SETUP: Level 1
-    player1 = p.loadImage(player1File);
-    player1.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
-    player2 = new AnimatedSprite(p, "sprites/chick_walk.png", "sprites/chick_walk.json", 0.0f, 0.0f, 0.5f);
-    level1Grid.setTileSprite(new GridLocation (player2Row, player2Col), player2);
-
+    //SETUP: Setup more grid1 objects
+    piece1 = p.loadImage(piece1File);
+    piece1.resize(grid1.getTileWidth(),grid1.getTileHeight());
+    chick = new AnimatedSprite(p, chickFile, chickJson, 0.0f, 0.0f, 0.5f);
+    grid1.setTileSprite(new GridLocation (chickRow, chickCol), chick);
+    // grid1.startPrintingGridMarks();
     b1 = new Button(p, "rect", 625, 525, 150, 50, "GoTo Level 2");
+    grid1.addSprite(b1);
     // b1.setFontStyle("fonts/spidermanFont.ttf");
     b1.setFontStyle("Calibri");
     b1.setTextColor(PColor.WHITE);
     b1.setButtonColor(PColor.BLACK);
     b1.setHoverColor(PColor.get(100,50,200));
     b1.setOutlineColor(PColor.WHITE);
-
-    System.out.println("Done loading Level 1 ...");
+    System.out.println("Done loading Level 1 (grid1)...");
     
-    //SETUP: Level 2
+    //SETUP: Setup more skyWorld objects
     zapdos = new Sprite(p, zapdosFile, 0.25f);
     zapdos.moveTo(zapdosStartX, zapdosStartY);
-    level2World.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
-    level2World.printWorldSprites();
-    System.out.println("Done loading Level 2 ...");
+    skyWorld.addSprite(zapdos);
+    skyWorld.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
+    skyWorld.printWorldSprites();
+    System.out.println("Done loading Level 2 (skyWorld)...");
 
-    // SETUP: Level 3
-    level3Bg = loadImage(level3BgFile);
-    level3Bg.resize(p.width, p.height);
-    level3World = new World(p,"platformer", level3Bg);
+    // SETUP: Setup more brickWorld objects
     plat = new Platform(p, PColor.MAGENTA, 500.0f, 100.0f, 200.0f, 20.0f);
     plat.setOutlineColor(PColor.BLACK);
     plat.startGravity(5.0f); //sets gravity to a rate of 5.0
-    level3World.addSprite(plat);    
-    System.out.println("Done loading Level 3 ...");
+    brickWorld.addSprite(plat);    
+    System.out.println("Done loading Level 3 (brickWorld)...");
 
 
     //SETUP: Sound
@@ -171,27 +169,27 @@ public class Game extends PApplet{
   //(Anything drawn on the screen should be called from here)
   public void draw() {
 
-    // Update Screen Visuals
+    // DRAW LOOP: Update Screen Visuals
     updateTitleBar();
     updateScreen();
 
-    // Set Timers
+    // DRAW LOOP: Set Timers
     int cycleTime = 1;  //milliseconds
     int slowCycleTime = 300;  //milliseconds
     if(slowCycleTimer == null){
       slowCycleTimer = new CycleTimer(p, slowCycleTime);
     }
 
-    // Move Sprites
+    // DRAW LOOP: Populate & Move Sprites
     if(slowCycleTimer.isDone()){
       populateSprites();
       moveSprites();
     }
 
-    // Pause Cycle
+    // DRAW LOOP: Pause Game Cycle
     currentScreen.pause(cycleTime);   // slows down the game cycles
 
-    // Check for end of game
+    // DRAW LOOP: Check for end of game
     if(isGameOver()){
       endGame();
     }
@@ -210,30 +208,35 @@ public class Game extends PApplet{
     //What to do when a key is pressed?tt
     
     //KEYS FOR LEVEL1
-    if(currentScreen == level1Grid){
+    if(currentScreen == grid1){
 
-      //set [S] key to move the player1 up & avoid Out-of-Bounds errors
-      if(p.keyCode == 83){
-        player2Row++;
+      // Set [S] key to move the chick down & avoid Out-of-Bounds errors
+      if(p.keyCode == 83){        
+
+        //change the field for chickRow
+        chickRow++;
       }
-      else if(p.key == 'a' && player2Col !=0){
-        player2Col--;
+
+      // Set [A] key to move check LEFT (as long as not in column 0)
+      else if(p.key == 'a' && chickCol !=0){
+        chickCol--;
       }
+
+      // Set [W] key to move UP (and move down to bottom if on top row)
       else if(p.key == 'w'){
-        if(player2Row == 0){
-          player2Row = level1Grid.getNumRows()-1;
+        if(chickRow == 0){
+          chickRow = grid1.getNumRows()-1;
         } else {
-            player2Row--;
+            chickRow--;
         }
       }
       
-
-      // if the 'n' key is pressed, ask for their name
+      // if the [n] key is pressed, ask for their name
       if(p.key == 'n'){
         name = Input.getString("What is your name?");
       }
 
-      // if the 't' key is pressed, then toggle the animation on/off
+      // if the [t] key is pressed, then toggle the animation on/off
       if(p.key == 't'){
         //Toggle the animation on & off
         doAnimation = !doAnimation;
@@ -244,28 +247,43 @@ public class Game extends PApplet{
 
     }
 
-    //KEYS FOR LEVEL 2
-    if(currentScreen == level2World){
+    // KEYS FOR SKYWORLD
+    if(currentScreen == skyWorld){
+
+      // Set [A] key to move Zapdos LEFT
       if(p.key == 'a'){
         zapdos.move(-5,0);
-      } else if (p.keyCode == 32){
+      } 
+      
+      // Set [SPACE] key to give an immedeate boost forward
+      else if (p.keyCode == 32){
         zapdos.setSpeed(10,0);
       }
 
     }
 
+    // KEYS FOR BRICKWORLD
+    if(currentScreen == brickWorld){
+
+      // Set [W] key to make the Platform jump
+      if(p.key == 'w'){
+        plat.jump();
+      }
+    }
+
     //CHANGING SCREENS BASED ON KEYS
     //change to level1 if 1 key pressed, level2 if 2 key is pressed
     if(p.key == '1'){
-      currentScreen = level1Grid;
+      currentScreen = grid1;
     } else if(p.key == '2'){
-      currentScreen = level2World;
+      currentScreen = skyWorld;
     } else if(p.key == '3'){
-      currentScreen = level3World;
+      currentScreen = brickWorld;
+
+      //reset the moving Platform every time the Screen is re-displayed
       plat.moveTo(500.0f, 100.0f);
       plat.setSpeed(0,0);
     }
-
 
   }
 
@@ -279,23 +297,22 @@ public class Game extends PApplet{
     int color = p.get(p.mouseX, p.mouseY);
     PColor.printPColor(p, color);
 
-    // Print grid coordinate clicked
+    // if the Screen is a Grid, print grid coordinate clicked
     if(currentScreen instanceof Grid){
       System.out.println("Grid location --> " + ((Grid) currentScreen).getGridLocation());
     }
 
-    // "Mark" the grid coordinate to track the state of the Grid
+    // if the Screen is a Grid, "mark" the grid coordinate to track the state of the Grid
     if(currentScreen instanceof Grid){
       ((Grid) currentScreen).setMark("X",((Grid) currentScreen).getGridLocation());
     }
 
-    // what to do if clicked? (ex. assign a new location to player1)
-    if(currentScreen == level1Grid){
-      player1Row = level1Grid.getGridLocation().getRow();
-      player1Col = level1Grid.getGridLocation().getCol();
+    // what to do if clicked? (ex. assign a new location to piece1)
+    if(currentScreen == grid1){
+      piece1Row = grid1.getGridLocation().getRow();
+      piece1Col = grid1.getGridLocation().getCol();
     }
     
-
 
   }
 
@@ -307,8 +324,11 @@ public class Game extends PApplet{
   public void updateTitleBar(){
 
     if(!isGameOver()) {
+
+      extraText = currentScreen.getName();
+
       //set the title each loop
-      // surface.setTitle(titleText + "    " + extraText + " " + name + ": " + health);
+      surface.setTitle(titleText + "\t// CurrentScreen: " + extraText + " \t // Name: " + name + "\t // Health: " + health );
 
       //adjust the extra text as desired
     
@@ -329,48 +349,48 @@ public class Game extends PApplet{
 
       // Change the screen to level 1 between 3 and 5 seconds
       if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
-        currentScreen = level1Grid;
+        currentScreen = grid1;
       }
     }
 
-    // UPDATE: level1Grid Screen
-    if(currentScreen == level1Grid){
+    // UPDATE: grid1 Screen
+    if(currentScreen == grid1){
 
       // Print a '1' in console when level1
       System.out.print("1");
 
-      // Displays the player1 image
-      GridLocation player1Loc = new GridLocation(player1Row,player1Col);
-      level1Grid.setTileImage(player1Loc, player1);
+      // Displays the piece1 image
+      GridLocation piece1Loc = new GridLocation(piece1Row,piece1Col);
+      grid1.setTileImage(piece1Loc, piece1);
 
-      // Displays the player2 image
-      GridLocation player2Loc = new GridLocation(player2Row, player2Col);
-      level1Grid.setTileSprite(player2Loc, player2);
+      // Displays the chick image
+      GridLocation chickLoc = new GridLocation(chickRow, chickCol);
+      grid1.setTileSprite(chickLoc, chick);
 
       // Moves to next level based on a button click
-      b1.show();
+      // b1.show();
       if(b1.isClicked()){
         System.out.println("\nButton Clicked");
-        currentScreen = level2World;
+        currentScreen = skyWorld;
       }
     
     }
     
-    // UPDATE: level2World Screen
-    if(currentScreen == level2World){
+    // UPDATE: skyWorld Screen
+    if(currentScreen == skyWorld){
 
-      // Print a '2' in console when level2
+      // Print a '2' in console when skyWorld
       System.out.print("2");
 
-      level2World.moveBgXY(-0.3f, 0f);  //adjust speeds of moving backgrounds, -3.0f for 100 ms delays
-      zapdos.show();
+      // Set speed of moving skyWorld background
+      skyWorld.moveBgXY(-0.3f, 0f);
 
     }
 
-    // UPDATE: level3World Screen
-    if(currentScreen == level3World){
+    // UPDATE: brickWorld Screen
+    if(currentScreen == brickWorld){
 
-      // Print a '3 in console when level3
+      // Print a '3 in console when brickWorld
       System.out.print("3");
 
 
@@ -416,13 +436,13 @@ public class Game extends PApplet{
 
         //Store the next GridLocation
 
-        //Check if the current tile has an image that is not player1      
+        //Check if the current tile has an image that is not piece1      
 
 
           //Get image/sprite from current location
             
 
-          //CASE 1: Collision with player1
+          //CASE 1: Collision with piece1
 
 
           //CASE 2: Move enemy over to new location
