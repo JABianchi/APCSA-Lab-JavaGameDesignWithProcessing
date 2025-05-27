@@ -1,10 +1,7 @@
 /* Game Class Starter File
  * Authors: Joel A. Bianchi
- * Last Edit: 5/22/25
- * using new Screen show() method
- * Eliminate usage of currentWorld & currentGrid
- * Use of CycleTimer for draw loop
- * Added Platform example in level3World
+ * Last Edit: 5/26/25
+ * Added example for using grid method setAllMarks()
  */
 
 //import processing.sound.*;
@@ -128,7 +125,6 @@ public class Game extends PApplet{
     piece1.resize(grid1.getTileWidth(),grid1.getTileHeight());
     chick = new AnimatedSprite(p, chickFile, chickJson, 0.0f, 0.0f, 0.5f);
     grid1.setTileSprite(new GridLocation (chickRow, chickCol), chick);
-    // grid1.startPrintingGridMarks();
     b1 = new Button(p, "rect", 625, 525, 150, 50, "GoTo Level 2");
     grid1.addSprite(b1);
     // b1.setFontStyle("fonts/spidermanFont.ttf");
@@ -137,6 +133,16 @@ public class Game extends PApplet{
     b1.setButtonColor(PColor.BLACK);
     b1.setHoverColor(PColor.get(100,50,200));
     b1.setOutlineColor(PColor.WHITE);
+    String[][] tileMarks = {
+      {"R","N","B","Q","K","B","N","R"},
+      {"P","P","P","P","P","P","P","P"},
+      {"", "", "", "", "", "", "", ""},
+      {"", "", "", "", "", "", "", ""},
+      {"P","P","P","P","P","P","P","P"},
+      {"R","N","B","Q","K","B","N","R"}
+    };
+    grid1.setAllMarks(tileMarks);
+    grid1.startPrintingGridMarks();
     System.out.println("Done loading Level 1 (grid1)...");
     
     //SETUP: Setup more skyWorld objects
