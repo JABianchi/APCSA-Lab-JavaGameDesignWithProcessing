@@ -46,6 +46,8 @@ public class Game extends PApplet{
   int chickCol = 2;
   int health = 3;
   Button b1;
+  PImage wolf;
+
 
   // VARIABLES: skyWorld Screen (characters move by pixels)
   World skyWorld;
@@ -55,6 +57,7 @@ public class Game extends PApplet{
   String zapdosFile = "images/zapdos.png";
   int zapdosStartX = 50;
   int zapdosStartY = 300;
+  Sprite articuno;
 
   //VARIABLES: brickWorld Screen (characters jump on platforms with gravity)
   World brickWorld;
@@ -143,6 +146,8 @@ public class Game extends PApplet{
     };
     grid1.setAllMarks(tileMarks);
     grid1.startPrintingGridMarks();
+    wolf = p.loadImage("images/wolf.png");
+    wolf.resize(grid1.getTileHeight(), grid1.getTileWidth());
     System.out.println("Done loading Level 1 (grid1)...");
     
     //SETUP: Setup more skyWorld objects
@@ -151,6 +156,9 @@ public class Game extends PApplet{
     skyWorld.addSprite(zapdos);
     skyWorld.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
     skyWorld.printWorldSprites();
+    articuno = new Sprite(p, "images/articuno.png", 0.5f);
+    skyWorld.addSprite(articuno);
+    articuno.moveTo(100,600);
     System.out.println("Done loading Level 2 (skyWorld)...");
 
     // SETUP: Setup more brickWorld objects
@@ -420,17 +428,31 @@ public class Game extends PApplet{
   // Populates enemies or other sprites on the Screen
   public void populateSprites(){
 
-    //What is the index for the last column?
-    
+    if(currentScreen == grid1){
 
-    //Loop through all the rows in the last column
+      //What is the index for the last column?
+      int spawnCol = grid1.getNumCols()-1;
 
-      //Generate a random number
+      //Loop through all the rows in the last column
+      for(int r = 0; r<grid1.getNumRows(); r++){
 
+        //Generate a random number
+        double rando = Math.random();
 
-      //10% of the time, decide to add an enemy image to a Tile
-      
+        //10% of the time, decide to add an enemy image to a Tile
+        if(rando < 0.01){
+          GridLocation wolfLoc =  new GridLocation(r, spawnCol);
+          grid1.setTileImage(wolfLoc, wolf);
+          grid1.setMark("w", wolfLoc);
+        }
+        
+      }
+    } 
 
+    else if(currentScreen == skyWorld){
+      skyWorld.addSprite(articuno.copyTo(300, 300));
+
+    }
   }
 
   // Moves around the enemies/sprites on the Screen

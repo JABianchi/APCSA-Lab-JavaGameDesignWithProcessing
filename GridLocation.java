@@ -1,4 +1,4 @@
-/* GridLocation class - helper class to store coordinates more easily
+ /* GridLocation class - helper class to store coordinates more easily
  * Author: Joel Bianchi
  * Last Edit: 5/10/25
  * Modified toString
