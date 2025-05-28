@@ -2,8 +2,10 @@
  * Inspired by Daniel Shiffman's p5js Animated Sprite tutorial
  * Note: Picture coordinate origina at top, left corner
  * Author: Joel Bianchi & Marcus Bistline
- * Last Edit: 5/22/25
- * Added jump methods & default gravityStrength
+ * Last Edit: 5/28/25
+ * Added isOverlapping() method
+ * Added isTouchingTop() method
+ * Added isSolid property to Sprites
  */
 
 
@@ -27,6 +29,7 @@ public class Sprite{
   private float speedY;
   private float accelX;
   private float accelY;
+  private boolean isSolid = true;
   private boolean isAnimated;
   private boolean hasGravity = false;
   private float defaultGravity = 5.0f;
@@ -74,6 +77,7 @@ public class Sprite{
     this.speedX = 0;
     this.speedY = 0;
     this.isAnimated = isAnimated;
+    this.isSolid = true;
 
     // System.out.println("---->Sprite Class: "+ Game.toStringPImage(spriteImg));
 
@@ -92,7 +96,7 @@ public class Sprite{
     this.speedX = 0;
     this.speedY = 0;
     this.isAnimated = false;
-
+    this.isSolid = true;
   }
 
   // Sprite Constructor #6: Blob of color Sprite, used for Platform
@@ -107,6 +111,7 @@ public class Sprite{
     this.speedX = 0;
     this.speedY = 0;
     this.isAnimated = false;
+    this.isSolid = true;
     this.color = color;
     System.out.println("done loading Sprite: " + this);
   }
@@ -221,6 +226,51 @@ public class Sprite{
     p.translate(centerX,centerY);
     rotate(rads);
   }
+
+  // Changes if a Sprite is solid
+  public void setSolid(boolean isSolid){
+    this.isSolid = isSolid;
+  }
+
+  // Checks if a Sprite is solid
+  public boolean isSolid(){
+    return isSolid;
+  }
+
+
+  //------------------ SPRITE COLLISSIONS & OVERLAPS --------------------//
+  
+  // Checks if the rectangle of this Sprite overlaps in any way with the rectangle of another
+  public boolean isOverlapping(Sprite other){
+    if(this.getBottom() >= other.getTop()   //bottom isn'too low
+      && this.getTop() <= other.getBottom() //top isn't too high
+      && this.getLeft() <= other.getRight() // left isn't too far right
+      && this.getRight() >= other.getLeft()       // right isn't too far left
+    ){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  // Checks if sprite has landed on top of another sprite with a specified cushion on top -Marcus Bistline 2025
+  public boolean isTouchingTop(Sprite otherSprite, double cushion){
+    if(this.getBottom() > otherSprite.getTop()-cushion //is player low enough to touch platform
+      && this.getBottom() < otherSprite.getBottom() // is player still above the platform
+      && this.getLeft() < otherSprite.getRight() // is player inside the right edge of platform
+      && this.getRight() > otherSprite.getLeft()){ // is player inside the left edge of platform
+        return true;
+    } else {
+      return  false;
+    }
+  }
+
+  // Checks if sprite has landed on top of another sprite
+  public boolean isTouchingTop(Sprite otherSprite){
+    return isTouchingTop(otherSprite, 10);
+  }
+
 
 
 
