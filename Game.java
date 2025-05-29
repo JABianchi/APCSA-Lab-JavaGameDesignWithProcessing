@@ -457,33 +457,56 @@ public class Game extends PApplet{
 
   // Moves around the enemies/sprites on the Screen
   public void moveSprites(){
+    
+    if(currentScreen == grid1){
 
-    //Loop through all of the rows & cols in the grid
+      // Loop through all of the rows & cols in the grid
+      for(int r=0; r< grid1.getNumRows(); r++){
+        for(int c=0; c<grid1.getNumCols(); c++){
 
-        //Store the current GridLocation
+          // Store the current GridLocation
+          GridLocation loc = new GridLocation(r, c);
 
-        //Store the next GridLocation
+          // Store the next GridLocation
+          GridLocation nextLoc = new GridLocation(r, c-1);
 
-        //Check if the current tile has an image that is not piece1      
+          // Check if the current tile has an sprite that is not chick (Use getTileSprite() from Grid class)
+          if(!chick.equals(grid1.getTileSprite(loc))){
+
+            // Get image from current location (to check if it's a wolf image)
+            PImage currentImage = grid1.getTileImage(loc);
+
+            // Get image/sprite from next location (to check if it's a chick sprite)
+            Sprite nextSprite= grid1.getTileSprite(nextLoc);
+
+            //CASE 1: Enemy collides with chick
+            if(wolf.equals(currentImage) && chick.equals(nextSprite)){
 
 
-          //Get image/sprite from current location
-            
+            }
 
-          //CASE 1: Collision with piece1
+            //CASE 2: Move enemy over to new location
+            else if(){
+
+              //Erase image/sprite from old location
+
+              //System.out.println(loc + " " + grid.hasTileImage(loc));
+
+            }
+
+            //CASE 3: Enemy leaves screen at first column
+            else{
 
 
-          //CASE 2: Move enemy over to new location
+            }
 
+          }      
 
-          //Erase image/sprite from old location
+        }
+      }
+    } // ends 2d loop
 
-          //System.out.println(loc + " " + grid.hasTileImage(loc));
-
-            
-        //CASE 3: Enemy leaves screen at first column
-
-  }
+  } // ends moveSprites()
 
   // Checks if there is a collision between Sprites on the Screen
   public boolean checkCollision(GridLocation loc, GridLocation nextLoc){
