@@ -3,5 +3,3 @@ out
 *.class
 out/source
 out/*.class
-javadoc
-javadoc/*
