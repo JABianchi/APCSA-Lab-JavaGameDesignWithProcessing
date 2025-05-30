@@ -1,5 +1,6 @@
-/* Button Class - Used to add a button into a Game
- * Author: Joel Bianchi
+/**
+ * Button Class - Used to add a button into a Game
+ * @author Joel A Bianchi
  * Last Edit: 5/22/25
  * Button IS-A Sprite now
  */
@@ -221,6 +222,5 @@ public class Button extends Sprite{
         return "Button shape " + this.shape + " with text \"" + this.text + "\" @loc " + this.shapeX +","+this.shapeY + " w:"+this.shapeW+" h:"+this.shapeH;
     }
 
+} // end of Button class
 
-
-} //end Button class

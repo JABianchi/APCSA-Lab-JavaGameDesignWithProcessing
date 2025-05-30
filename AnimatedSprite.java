@@ -1,12 +1,14 @@
-/* Animated Sprite class - useful to have Sprites move around
+/** 
+ * Animated Sprite class - useful to have Sprites move around
  * Designed to be used with Spritesheets & JSON Array files from TexturePacker software: 
  * https://free-tex-packer.com/app/
  * Inspired by Daniel Shiffman's p5js Animated Sprite tutorial: https://youtu.be/3noMeuufLZY
- * Authors: Joel Bianchi, Aiden Sing, Tahlei Richardson
- * Last Edit: 5/8/25
+ * @author Joel Bianchi
+ * @author Aiden Sing
+ * @author Tahlei Richardson
+ * @version 5/8/25
  * Updated to Java version
  */
-
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -23,11 +25,18 @@ public class AnimatedSprite extends Sprite{
   private int len;
   float iBucket;
   float aSpeed; //variable to track how quickly the animation images cycle
-
   JSONObject spriteData;
   PImage spriteSheet;
 
-  // Constructor #1 for AnimatedSprite with Spritesheet (Must use the TexturePacker to make the JSON)
+  /**
+   * Constructor #1 for AnimatedSprite with Spritesheet (Must use the TexturePacker to make the JSON)
+   * @param p             Processing applet
+   * @param png           spritesheet file generated from TexturePacker (See instructions for how to generate)
+   * @param json          json data file generated from TexturePacker (See instructions for how to generate)
+   * @param x             sets the initial LEFT edge of the Sprite
+   * @param y             sets the initial TOP edge of the Sprite
+   * @param aSpeed        how quickly the animations will cycle
+   */
   public AnimatedSprite(PApplet p, String png, String json, float x, float y, float aSpeed) {
     super(p, png, x, y, 1.0f, true);
     
@@ -43,50 +52,84 @@ public class AnimatedSprite extends Sprite{
 
   }
 
-  //Constructor #2: animations + starting coordinates
+  /**
+   * Constructor #2: animations + starting coordinates
+   * @param p             Processing applet
+   * @param png           spritesheet file generated from TexturePacker (See instructions for how to generate)
+   * @param json          json data file generated from TexturePacker (See instructions for how to generate)
+   * @param x             sets the initial LEFT edge of the Sprite
+   * @param y             sets the initial TOP edge of the Sprite
+   */
   public AnimatedSprite(PApplet p, String png, String json, float x, float y ) {
     this(p, png, json, x, y, 1.0f);
   }
 
-  // Constructor #3 taking in images and json only
+  /**
+   * Constructor #3 taking in images and json only
+   * @param p             Processing applet
+   * @param png           spritesheet file generated from TexturePacker (See instructions for how to generate)
+   * @param json          json data file generated from TexturePacker (See instructions for how to generate)
+   */
   public AnimatedSprite(PApplet p, String png, String json) {
     this(p, png, json, 0.0f, 0.0f, 1.0f);
   }
 
-
-  //Overriden method: Displays the correct frame of the Sprite image on the screen
+  /**
+   * Overriden method
+   * Displays the correct frame of the Sprite image on the screen
+   */
   public void show() {
     int index = (int) Math.floor(Math.abs(this.iBucket)) % this.len;
     p.image(animation.get(index), super.getLeft(), super.getTop());
     //System.out.println("aSpeed: "+ aSpeed+"\tib: "+iBucket+"\t ind: "+ index);
     //System.out.println("Pos: "+ super.getX() +"," + super.getY());
-  } 
-
-
-  //Method to set the speed of how fast the frames cycle
+  }
+  
+  /**
+   * Sets the speed of how fast the frames cycle 
+   * @param animationSpeed
+   */
   public void setSpeed(float animationSpeed){
     this.aSpeed = animationSpeed;
   }
-
-  //Method to cycle through the images of the animated sprite & reset a new animation speed
+  
+  /** 
+   * Cycles through the images of the animated sprite & reset a new animation speed
+   * @param animationSpeed
+   */
   public void animate(float animationSpeed){
     setSpeed(animationSpeed);
     animate();
   }
 
-  //Method to cycle through the images of the animated sprite
+  /**
+   * Cycles through the images of the animated sprite
+   */
   public void animate(){
     iBucket += aSpeed/this.len;
     show();
   }
-
-  //Method that makes animated sprite move in any straight line + sets animation speed
+  
+  /** 
+   * Makes animated sprite move in any straight line + sets animation speed
+   * @param hSpeed            horizontal speed of the Sprite
+   * @param vSpeed            vertical speed of the Sprite
+   * @param animationSpeed    how quickly the animations will cycle
+   * @param wraparound        true if animated sprite will appear on the other side of the screen 
+   *                          after travelling off the screen
+   */
   public void animateMove(float hSpeed, float vSpeed, float animationSpeed, boolean wraparound){
     this.aSpeed = animationSpeed;
     animateMove(hSpeed, vSpeed, wraparound);
   }
   
-  //Method that makes animated sprite move in any straight line
+  /** 
+   * Makes animated sprite move in any straight line
+   * @param hSpeed            horizontal speed of the Sprite
+   * @param vSpeed            vertical speed of the Sprite
+   * @param wraparound        true if animated sprite will appear on the other side of the screen 
+   *                          after travelling off the screen
+   */
   public void animateMove(float hSpeed, float vSpeed, boolean wraparound){
     
     //adjust speed & frames
@@ -100,57 +143,103 @@ public class AnimatedSprite extends Sprite{
     }
   }
 
-  //animated method that makes the Sprite move to the right-left
+  /** 
+   * Makes the AnimatedSprite move to the right-left
+   * @param horizontalSpeed   horizontal speed of the Sprite
+   * @param animationSpeed    how quickly the animations will cycle
+   * @param wraparound        true if animated sprite will appear on the other side of the screen 
+   *                          after travelling off the screen
+   */  
   public void animateHorizontal(float horizontalSpeed, float animationSpeed, boolean wraparound) {
     animateMove(horizontalSpeed, 0, animationSpeed, wraparound);
   }
 
-  //animated method that makes the Sprite move down-up
+  /** 
+   * Makes the AnimatedSprite move up-down
+   * @param verticalSpeed     vertical speed of the Sprite
+   * @param animationSpeed    how quickly the animations will cycle
+   * @param wraparound        true if animated sprite will appear on the other side of the screen 
+   *                          after travelling off the screen
+   */ 
   public void animateVertical(float verticalSpeed, float animationSpeed, boolean wraparound) {
     animateMove(0, verticalSpeed, animationSpeed, wraparound);
   }
 
-  //- Niko Baletin + Jaiden Kelly, 2023
-  public void animateToPlayer(AnimatedSprite player, float animationSpeed, boolean wraparound) {
-    float xDifference = player.getCenterX() - this.getCenterX();
-    float yDifference = player.getCenterY() - this.getCenterY();
+  /** 
+   * Makes the AnimatedSprite move in the direction of another AnimatedSprite
+   * @param otherAS           another AnimatedSprite
+   * @param animationSpeed    how quickly the animations will cycle
+   * @param wraparound        true if animated sprite will appear on the other side of the screen 
+   *                          after travelling off the screen
+   * @author Niko Baletin 2023
+   * @author Jaiden Kelly 2023
+   */
+  public void animateToPlayer(AnimatedSprite otherAS, float animationSpeed, boolean wraparound) {
+    float xDifference = otherAS.getCenterX() - this.getCenterX();
+    float yDifference = otherAS.getCenterY() - this.getCenterY();
     if ((xDifference < 100 && xDifference > -100) && (yDifference < 150 && yDifference > -150)) {
       animateMove(xDifference/300.0f, yDifference/300.0f, animationSpeed, wraparound);
     }
     animateMove(xDifference/1000.0f, yDifference/1000.0f, animationSpeed, wraparound);
   }
 
-  //Accessor method for the JSON path
+  /** 
+   * Accessor method
+   * @return String       the JSON file's path
+   */  
   public String getJsonFile(){
     return this.jsonFile;
   }
   
-  //Mutator method for the speed of the animation -Aiden Sing & Tahlei Richardson, 2023
-  public void setAnimationSpeed(float aSpeed) {
-    this.aSpeed = aSpeed;
+  /** 
+   * Mutator method
+   * @param animationSpeed    how quickly the animations will cycle
+   * @author Aiden Sing 2023
+   * @author Tahlei Richardson 2023
+   */  
+  public void setAnimationSpeed(float animationSpeed) {
+    this.aSpeed = animationSpeed;
   }
 
-  //Method to resize the animated sprite images to different dimensions
-  public void resize(int x, int y){
+  /**
+   * Resizes the animated sprite images to different dimensions
+   * @param w     width of the newly sized AnimatedSprite
+   * @param h     height of the newly sized AnimatedSprite
+   */
+  public void resize(int w, int h){
     for(int i=0; i<animation.size(); i++){
       PImage pi = animation.get(i);
-      pi.resize(x,y);
+      pi.resize(w,h);
     }
   }
 
-  //Method to copy an AnimatedSprite
+  /** 
+   * Copies an AnimatedSprite
+   * @return AnimatedSprite     new copy of this AnimatedSprite
+   */
   public AnimatedSprite copySprite(){
     //super.copy();
     return new AnimatedSprite(p, this.pngFile, this.jsonFile, super.getLeft(), super.getTop(), this.aSpeed);
   }
   
-  //Method to copy an AnimatedSprite to a specific location
+  /** 
+   * Copies an AnimatedSprite to a specific location
+   * @param x                 the LEFT edge of the copied ASprite
+   * @param y                 the TOP edge of the copied ASprite
+   * @return AnimatedSprite   new copy of this AnimatedSprite
+   */
   public AnimatedSprite copyTo(float x, float y){
     //super.copy();
     return new AnimatedSprite(p, this.pngFile, this.jsonFile, x, y, this.aSpeed);
   }
 
-  //Method to copy an AnimatedSprite to a specific location with a new speed
+  /** 
+   * Copies an AnimatedSprite to a specific location with a new speed
+   * @param x                 the LEFT edge of the copied ASprite
+   * @param y                 the TOP edge of the copied ASprite
+   * @param aSpeed        how quickly the animations will cycle
+   * @return AnimatedSprite   new copy of this AnimatedSprite
+   */
   public AnimatedSprite copyTo(float x, float y, float aSpeed){
     //super.copy();
     return new AnimatedSprite(p, this.pngFile, this.jsonFile, x, y, aSpeed);
@@ -159,7 +248,9 @@ public class AnimatedSprite extends Sprite{
 
   //---------------------PRIVATE HELPER METHODS--------------------------//
 
-  //wraparound sprite if goes off the right-left
+  /**
+   * Wraparound sprite if goes off the right-left
+   */
   private void wraparoundHorizontal(){
     if ( super.getLeft() > p.width ) {
       super.setLeft( -super.getW() );
@@ -168,7 +259,9 @@ public class AnimatedSprite extends Sprite{
     }
   }
 
-  //wraparound sprite if goes off the top-bottom
+  /**
+   * Wraparound sprite if goes off the top-bottom
+   */
   private void wraparoundVertical(){
     if ( super.getTop() > p.height ) {
       super.setTop( -super.getH() );
@@ -177,6 +270,12 @@ public class AnimatedSprite extends Sprite{
     }
   }
 
+  
+  /** 
+   * Converts spritesheet png to an ArrayList of PImages
+   * @param png
+   * @return ArrayList<PImage>
+   */
   private ArrayList<PImage> convertPngToList(String png){
 
       ArrayList<PImage> ani = new ArrayList<PImage>();
@@ -206,8 +305,6 @@ public class AnimatedSprite extends Sprite{
       }
 
       return ani;
-
     }
 
-
-}
+} // end of AnimatedSprite class

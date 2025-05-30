@@ -1,14 +1,16 @@
-/* HexGrid Class - useful for tile-based games with more flavor!
+/**
+ * HexGrid Class - useful for tile-based games with more flavor!
  * Inspired from CSRessel's Catan Game & Emmanuel Suriel's Grid class
  * https://github.com/CSRessel/catan/blob/master/src/gui/CatanBoard.java
  * Adapted for Processing
- * Authors: Joel Bianchi, Naomi Gaylor, Ezzeldin Moussa
- * Last Edit: 5/10/25
+ * @author Joel A Bianchi
+ * @author Naomi Gaylor 2022
+ * @author Ezzeldin Moussa 2022
+ * @version 5/10/25
  * Using new PColor methods
  * NOT FULLY FUNCTIONAL YET
  */
  
-
 import java.awt.Polygon;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -708,4 +710,4 @@ public class HexGrid {
 		return pg;
 	}
 
-}  
+}  // end of HexGrid class

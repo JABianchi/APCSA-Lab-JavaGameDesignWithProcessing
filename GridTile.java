@@ -1,8 +1,11 @@
-/* GridTile class - Designed to be used within the Grid class
+/**
+ * GridTile class - Designed to be used within the Grid class
  * GridTiles have distinguishable marks that will be printed out to the console for easy visualization of a 2D array
  * GridTiles can indicate if they have been "captured", colored, or are displaying an image
- * Authors: Joel Bianchi, Naomi Gaylor, Ezzeldin Moussa
- * Last Edit: 5/8/25
+ * @author: Joel A Bianchi
+ * @author Naomi Gaylor 2022
+ * @author Ezzeldin Moussa 2022
+ * @version 5/8/25
  * Updated to Java version
  */
 
@@ -176,8 +179,6 @@ public class GridTile{
     return this.coveredPic;
   }
 
-
-
   //method to access the location of the GridTile
   public GridLocation getLocation(){
       return location;
@@ -188,5 +189,4 @@ public class GridTile{
     return mark;
   }
 
-
-}
+} // end of GridTile class

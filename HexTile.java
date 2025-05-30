@@ -1,9 +1,11 @@
-/* HexTile Class
- * Based off code from Naomi Gaylor & Ezzeldin Moussa, June 2022
- * Last Edit: 5/8/25
+/**
+ * HexTile Class
+ * @author Joel A Bianchi
+ * @author Naomi Gaylor 2022
+ * @author Ezzeldin Moussa 2022
+ * @version 5/8/25
  * Updated to Java version
  */
-
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -17,7 +19,6 @@ public class HexTile extends GridTile{
   private float radius;
   private Point centerPixels;
   //private HexLocation hexLoc;
-
 
   //HexTile Constructor #1: X,Y coordinates
   public HexTile(PApplet p, int xCoord, int yCoord, float rad){
@@ -61,5 +62,4 @@ public class HexTile extends GridTile{
     return radius;
   }
 
-    
-}  
+} // end of HexTile class 

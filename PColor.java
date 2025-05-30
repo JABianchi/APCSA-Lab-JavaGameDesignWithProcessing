@@ -1,10 +1,12 @@
-/* PColor class - provides static variables and methods for Processing colors
- * Author: Joel Bianchi
- * Last Edit: 5/20/25
+/**
+ * PColor class - provides static variables and methods for Processing colors
+ * @author Joel A Bianchi
+ * @version 5/20/25
  * Added equals method & NULL
  */
 
 import processing.core.PApplet;
+
 
 public class PColor {
 
@@ -72,5 +74,4 @@ public class PColor {
             && getBlue(p, firstColor) == getBlue(p, secondColor);
     }
 
-
-}
+} // end of PColor class

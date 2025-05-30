@@ -1,14 +1,17 @@
-/* Grid Class - Used for rectangular-tiled games
+/** 
+ * Grid Class - Used for rectangular-tiled games
  * A 2D array of GridTiles which can be marked
  * Subclass of World that can show all Images & Sprites
- * Author: Joel Bianchi & RJ Morel
- * Last Edit: 5/27/25
+ * @author Joel A Bianchi
+ * @author RJ Morel
+ * @version 5/29/25
  * setAllMarks() method that can take in a 2D array of Strings
+ * added javadoc formatting
  */
-
 
 import processing.core.PApplet;
 import processing.core.PImage;
+
 
 public class Grid extends World{
   
@@ -21,24 +24,47 @@ public class Grid extends World{
 
   //------------------ GRID CONSTRUCTORS --------------------//
 
-  // Grid Constructor #1: Default constructor that creates a 3x3 Grid  
+  /**
+   * Grid Constructor #1: Default constructor that creates a 3x3 Grid  
+   * @param p             Processing applet
+   */
   public Grid(PApplet p){
      this(p, 3,3);
   }
 
-  //Grid Construtor #2: Only accepts the number of rows & columns (Default for 2023)
+  /**
+   * Grid Construtor #2: Only accepts the number of rows & columns (Default for 2023)
+   * @param p             Processing applet
+   * @param rows
+   * @param cols
+   */
   public Grid(PApplet p, int rows, int cols){
     this(p, "grid",null, rows, cols);
   }
 
-  //Grid constructor #3: Sets background image + rows & cols
-  public Grid(PApplet p, String screenName, PImage bg, int rows, int cols){
-    this(p, screenName, bg, null, rows, cols);
+  /**
+   * Grid constructor #3: Sets background image + rows & cols
+   * @param p             Processing applet
+   * @param screenName    String to track Screens
+   * @param bgImg         stationary background image
+   * @param rows
+   * @param cols
+   */
+  public Grid(PApplet p, String screenName, PImage bgImg, int rows, int cols){
+    this(p, screenName, bgImg, null, rows, cols);
   }
 
-  // Grid constructor #4: Takeas in 2D String array parameter to set tile marks
-  public Grid(PApplet p, String screenName, PImage bg, String[][] tileMarks, int rows, int cols){
-    super(p, screenName, bg);
+  /**
+   * Grid constructor #4: Takeas in 2D String array parameter to set tile marks
+   * @param p             Processing applet
+   * @param screenName    String to track Screens
+   * @param bgImg         stationary background image
+   * @param tileMarks
+   * @param rows
+   * @param cols
+   */
+  public Grid(PApplet p, String screenName, PImage bgImg, String[][] tileMarks, int rows, int cols){
+    super(p, screenName, bgImg);
 
     this.rows = rows;
     this.cols = cols;
@@ -56,40 +82,65 @@ public class Grid extends World{
 
   }
 
+  
+
   //------------------ GRID MARKING METHODS --------------------//
  
-  // Method that Assigns a String mark to a location in the Grid.  
-  // This mark is not necessarily visible, but can help in tracking
-  // what you want recorded at each GridLocation.
+  /** 
+   * Assigns a String mark to a location in the Grid.
+   * This mark is not necessarily visible, but can help in tracking
+   * what you want recorded at each GridLocation.
+   * @param mark
+   * @param loc      GridLocation for a specific GridTile
+   */
   public void setMark(String mark, GridLocation loc){
     board[loc.getRow()][loc.getCol()].setMark(mark);
     if(printingGridMarks){
       printGrid();
     }
-  } 
+  }
   
-  //Method to get the mark value at a location -RJ Morel
+  /** 
+   * Gets the mark value at a location
+   * @param loc      GridLocation for a specific GridTile
+   * @return String
+   * @author RJ Morel 2023
+   */
   public String getMark(GridLocation loc){
     return board[loc.getRow()][loc.getCol()].getMark();
   }
   
-  //Method to get the mark value at a location -RJ Morel
+  /** 
+   * Gets the mark value at a location
+   * @param loc      GridLocation for a specific GridTile
+   * @return boolean
+   * @author RJ Morel 2023
+   */
   public boolean removeMark(GridLocation loc){
     boolean isGoodClick = board[loc.getRow()][loc.getCol()].removeMark();
     return isGoodClick;
   }
   
-  //Method to check if a location has a mark -RJ Morel
+  /** 
+   * Checks if a location has a mark
+   * @param loc      GridLocation for a specific GridTile
+   * @return boolean
+   * @author RJ Morel 2023
+   */ 
   public boolean hasMark(GridLocation loc){
     GridTile tile = board[loc.getRow()][loc.getCol()];
     boolean isGoodClick = tile.getMark() != tile.getNoMark();
     return isGoodClick;
-  } 
-
-  // Method that Assigns a String mark to a location in the Grid.  
-  // This mark is not necessarily visible, but can help in tracking
-  // what you want recorded at each GridLocation.  
-  // Returns true if mark is correctly set (no previous mark) or false if not
+  }
+  
+  /** 
+   * Assigns a String mark to a location in the Grid.
+   * This mark is not necessarily visible, but can help in tracking
+   * what you want recorded at each GridLocation.
+   * @param mark
+   * @param loc
+   * @return boolean      <code>true</code> if mark is correctly set (no previous mark), <code>false</code> otherwise
+   */
   public boolean setNewMark(String mark, GridLocation loc){
     int row = loc.getRow();
     int col = loc.getCol();
@@ -98,9 +149,11 @@ public class Grid extends World{
       printGrid();
     }
     return isGoodClick;
-  } 
+  }
 
-  //Method that prints out the marks in the Grid to the console
+  /**
+   * Prints out the marks in the Grid to the console
+   */
   public void printGrid(){
     for(int r = 0; r<rows; r++){
       for(int c = 0; c<cols; c++){
@@ -110,15 +163,26 @@ public class Grid extends World{
     } 
   }
 
+  /**
+   * If Grid mark system is used, shows all marks in the Grid in the console
+   */
   public void startPrintingGridMarks(){
     printingGridMarks = true;
   }
+
+  /**
+   * Turns off Grid mark system from printing all marks in the Grid in the console
+   */
   public void stopPrintingGridMarks(){
     printingGridMarks = false;
   }
 
-  // Sets the marks for an entire grid from a 2D String array
-  // tileMarks MUST match the same number of rows & columns as the grid
+  
+  /**
+   * Sets the marks for an entire grid from a 2D String array
+   * tileMarks MUST match the same number of rows & columns as the grid 
+   * @param tileMarks
+   */
   public void setAllMarks(String[][] tileMarks){
 
     if(tileMarks != null){
@@ -156,100 +220,174 @@ public class Grid extends World{
 
   //------------------ GRID ACCESSOR METHODS --------------------//
 
-  //Method that returns the GridLocation of where the mouse is currently hovering over
+  /** 
+   * @return GridLocation     where the mouse is currently hovering over
+   */  
   public GridLocation getGridLocation(){
       
     int row = p.mouseY/(p.pixelHeight/this.rows);
     int col = p.mouseX/(p.pixelWidth/this.cols);
 
     return new GridLocation(row, col);
-  } 
-
-  //Accessor method that provide the x-pixel value given a GridLocation loc
+  }
+  
+  /** 
+   * Provides the x-pixel value given a GridLocation loc
+   * @param loc       GridLocation to check
+   * @return int      x-pixel value
+   */
   public int getX(GridLocation loc){
     int widthOfOneTile = p.pixelWidth/this.cols;
     //calculate the left of the grid GridLocation
     int pixelX = (widthOfOneTile * loc.getCol()); 
     return pixelX;
   }
+  
+  /** 
+   * @param row     row of a specific GridTile
+   * @param col     column of a specific GridTile
+   * @return int    x-value of left edge of a GridTile
+   */
   public int getX(int row, int col){
     return getX(new GridLocation(row, col));
   }
+  
+  /** 
+   * @param loc     GridLocation for a specific GridTile
+   * @return int    x-value of center pixel of the GridLocation
+   */
   public int getCenterX(GridLocation loc){
     return getX(loc) + getTileWidth()/2;
   }
   
-  //Accessor method that provide the y-pixel value given a GridLocation loc
+  /** 
+   * @param loc     GridLocation for a specific GridTile
+   * @return int    y-value of top pixel of a GridLocation
+   */
   public int getY(GridLocation loc){
     int heightOfOneTile = p.pixelHeight/this.rows;
     //calculate the top of the grid GridLocation
     int pixelY = (heightOfOneTile * loc.getRow()); 
     return pixelY;
   }
+  
+  /** 
+   * @param row     row of a specific GridTile
+   * @param col     column of a specific GridTile
+   * @return int    y-value of left edge of a GridTile
+   */
   public int getY(int row, int col){
     return getY(new GridLocation(row,col));
   }
+  
+  /** 
+   * @param loc     GridLocation for a specific GridTile
+   * @return int    y-value of center pixel of the GridLocation
+   */
   public int getCenterY(GridLocation loc){
     return getY(loc) + getTileHeight()/2;
   }
   
-  //Accessor method that returns the number of rows in the Grid
+  /** 
+   * Accessor method
+   * @return int      number of rows in the Grid
+   */
   public int getNumRows(){
     return rows;
   }
   
-  //Accessor method that returns the number of cols in the Grid
+  
+  /** 
+   * Accessor method
+   * @return int      number of cols in the Grid
+   */ 
   public int getNumCols(){
     return cols;
   }
 
-  //Accessor method that returns the width of 1 Tile in the Grid
+  
+  /** 
+   * Accessor method
+   * @return int      width of 1 Tile in the Grid
+   */
   public int getTileWidth(){
     return p.pixelWidth/this.cols;
   }
-  //Accessor method that returns the height of 1 Tile in the Grid
+  
+  /** 
+   * Accessor method 
+   * @return int        height of 1 Tile in the Grid
+   */
   public int getTileHeight(){
     return p.pixelHeight/this.rows;
   }
 
-  //Returns the GridTile object stored at a specified GridLocation
+  
+  /**
+   * Returns the GridTile object stored at a specified GridLocation
+   * @param loc      GridLocation for a specific GridTile
+   * @return GridTile
+   */
   public GridTile getTile(GridLocation loc){
     return board[loc.getRow()][loc.getCol()];
   }
-
-  //Returns the GridTile object stored at a specified row and column
-  public GridTile getTile(int r, int c){
-    return board[r][c];
+  
+  /** 
+   * @param row         row of a specific GridTile
+   * @param col         column of a specific GridTile
+   * @return GridTile   GridTile object stored at a specified row and column
+   */
+  public GridTile getTile(int row, int col){
+    return board[row][col];
   }
 
 
+  
   //------------------ GRID TILE IMAGE METHODS --------------------//
 
-  //Method that sets the image at a particular tile in the grid & displays it
-  public void setTileImage(GridLocation loc, PImage pi){
+  /** 
+   * Sets the image at a particular tile in the grid & displays it
+   * @param loc      GridLocation for a specific GridTile
+   * @param img
+   */
+  public void setTileImage(GridLocation loc, PImage img){
     GridTile tile = getTile(loc);
-    tile.setImage(pi);
+    tile.setImage(img);
     //showTileImage(loc);
   }
-
-  //Method that returns the PImage associated with a particular Tile
+  
+  /** 
+   * Returns the PImage associated with a particular GridTile
+   * @param loc      GridLocation for a specific GridTile
+   * @return PImage
+   */
   public PImage getTileImage(GridLocation loc){
     GridTile tile = getTile(loc);
     return tile.getImage();
   }
-
-
-  //Method that returns if a Tile has a PImage
+  
+  /** 
+   * @param loc         GridLocation for a specifc GridTile
+   * @return boolean    <code>true</code> if the GridTile has a PImage, <code>false</code> otherwise
+   */
   public boolean hasTileImage(GridLocation loc){
     GridTile tile = getTile(loc);
     return tile.hasImage();
   }
-
-  //Method that clears the tile image
+  
+  /** 
+   * Clears the tile image
+   * @param loc      GridLocation for a specific GridTile
+   */
   public void clearTileImage(GridLocation loc){
     setTileImage(loc,null);
   }
 
+  
+  /** 
+   * Displays the PImage at a specific location
+   * @param loc      GridLocation for a specific GridTile
+   */
   public void showTileImage(GridLocation loc){
     GridTile tile = getTile(loc);
     if(tile.hasImage()){
@@ -257,7 +395,9 @@ public class Grid extends World{
     }
   }
 
-  //Method to show all the PImages stored in each GridTile
+  /**
+   * Displays the PImages stored in ALL the GridTiles
+   */
   public void showGridImages(){
 
     //Loop through all the Tiles and display its images/sprites
@@ -274,23 +414,29 @@ public class Grid extends World{
         }
       }
   }
-  //to be deprecated
+
+  @Deprecated
   public void showImages(){
     showGridImages();
   }
 
-  // Displays all World + Screen + Grid visuals
+  /**
+   * Displays all World + Screen + Grid visuals
+   */
   public void show(){
     super.show();
     this.showGridImages();
     this.showGridSprites();
   }
 
+  
+   //------------------  GRID SPRITES METHODS --------------------//
 
-
-  //------------------  GRID SPRITES METHODS --------------------//
-
-  //Method that sets the Sprite at a particular tile in the grid & displays it
+  /** 
+   * Sets the Sprite at a particular tile in the grid & displays it
+   * @param loc         GridLocation to change
+   * @param sprite      new Sprite to add to tile
+   */
   public void setTileSprite(GridLocation loc, Sprite sprite){
     GridTile tile = getTile(loc);
     if(sprite == null){
@@ -307,25 +453,39 @@ public class Grid extends World{
     //System.out.println("Succcessfully set tile @ " + loc);
   }
   
-  //Method that returns the PImage associated with a particular Tile
+  /** 
+   * Gets the Sprite from a specific GridTile
+   * @param loc         GridLocation for a specific GridTile
+   * @return Sprite     Sprite associated with a particular Tile
+   */
   public Sprite getTileSprite(GridLocation loc){
     GridTile tile = getTile(loc);
     //System.out.println("Grid.getTileSprite() " + tile.getSprite());
     return tile.getSprite();
   }
   
-  //Method that returns if a Tile has a PImage
+  /** 
+   * Checks if a Tile has a PImage
+   * @param loc         GridLocation for a specific GridTile
+   * @return boolean      <code>true</code> if the GridTile has a stored image, <code>false</code> otherwise
+   */  
   public boolean hasTileSprite(GridLocation loc){
     GridTile tile = getTile(loc);
     return tile.hasSprite();
   }
 
-  //Method that clears the tile image
+  /** 
+   * Clears the image from a particular tile
+   * @param loc         GridLocation for a specific GridTile
+   */
   public void clearTileSprite(GridLocation loc){
     setTileSprite(loc,null);
   }
-
-  //Method that checks for an AnimatedSprite and animates it
+  
+  /** 
+   * Checks for an AnimatedSprite and animates it
+   * @param loc         GridLocation for a specific GridTile
+   */
   public void animateTileSprite(GridLocation loc){
     try{
       AnimatedSprite aSprite = (AnimatedSprite)getTileSprite(loc);
@@ -335,7 +495,11 @@ public class Grid extends World{
       System.out.println("Is your Sprite an AnimatedSprite?\n"+e);
     }
   }
-
+  
+  /** 
+   * Displays the Sprite on a single GridTile
+   * @param loc         GridLocation for a specific GridTile
+   */
   public void showTileSprite(GridLocation loc){
     GridTile tile = getTile(loc);
     if(tile.hasSprite()){
@@ -343,8 +507,9 @@ public class Grid extends World{
     }
   }
 
-  
-  //Method to show all the PImages stored in each GridTile
+  /**
+   * Displays ALL the Sprites stored in the Grid
+   */
   public void showGridSprites(){
 
     //Loop through all the Tiles and display its images/sprites
@@ -369,7 +534,9 @@ public class Grid extends World{
       }
   }
 
-  //Method to clear the screen from all Images & Sprites
+  /**
+   * Clears the screen from all Images & Sprites
+   */
   public void clearGrid(){
 
     //Loop through all the Tiles and display its images/sprites
@@ -389,4 +556,4 @@ public class Grid extends World{
         }
     }
 
-}
+} // end of Grid class

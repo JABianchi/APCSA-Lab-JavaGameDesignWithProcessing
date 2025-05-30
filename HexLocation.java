@@ -1,7 +1,8 @@
-/* HexLocation Class
+/**
+ * HexLocation Class
  * HexLocations use x & y coordinate instead of row & column designations
- * Author: Joel Bianchi
- * Last Edit: 5/8/25
+ * @author Joel A Bianchi
+ * @version 5/8/25
  * Updated to Java version
  */
 
@@ -32,5 +33,4 @@ public class HexLocation extends GridLocation{
     return "(" + xCoord + ", " + yCoord + ")";
   }
 
-
-}
+} // end of HexLocation class

@@ -1,13 +1,14 @@
-/* Game Class Starter File
- * Authors: Joel A. Bianchi
- * Last Edit: 5/26/25
+/**
+ * Game Class - Primary game logic for a Java-based Processing Game
+ * @author Joel A Bianchi
+ * @version 5/29/25
  * Added example for using grid method setAllMarks()
  */
 
 //import processing.sound.*;
-
 import processing.core.PApplet;
 import processing.core.PImage;
+
 
 public class Game extends PApplet{
 
@@ -164,7 +165,7 @@ public class Game extends PApplet{
     // SETUP: Setup more brickWorld objects
     plat = new Platform(p, PColor.MAGENTA, 500.0f, 100.0f, 200.0f, 20.0f);
     plat.setOutlineColor(PColor.BLACK);
-    plat.startGravity(5.0f); //sets gravity to a rate of 5.0
+    // plat.startGravity(5.0f); //sets gravity to a rate of 5.0
     brickWorld.addSprite(plat);    
     System.out.println("Done loading Level 3 (brickWorld)...");
 
@@ -462,7 +463,7 @@ public class Game extends PApplet{
 
       // Loop through all of the rows & cols in the grid
       for(int r=0; r< grid1.getNumRows(); r++){
-        for(int c=0; c<grid1.getNumCols(); c++){
+        for(int c=1; c<grid1.getNumCols(); c++){
 
           // Store the current GridLocation
           GridLocation loc = new GridLocation(r, c);
@@ -485,8 +486,8 @@ public class Game extends PApplet{
 
             }
 
-            //CASE 2: Move enemy over to new location
-            else if(){
+            //CASE 2: Move enemy over to new location (when NOT out of bounds!)
+            else if(c != 0){
 
               //Erase image/sprite from old location
 
@@ -550,4 +551,4 @@ public class Game extends PApplet{
   }
 
 
-} //close class
+} // end of Game class
