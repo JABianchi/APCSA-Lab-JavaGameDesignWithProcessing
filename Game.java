@@ -159,7 +159,7 @@ public class Game extends PApplet{
     skyWorld.printWorldSprites();
     articuno = new Sprite(p, "images/articuno.png", 0.5f);
     skyWorld.addSprite(articuno);
-    articuno.moveTo(100,600);
+    articuno.moveTo(300,300);
     System.out.println("Done loading Level 2 (skyWorld)...");
 
     // SETUP: Setup more brickWorld objects
@@ -199,6 +199,7 @@ public class Game extends PApplet{
     if(slowCycleTimer.isDone()){
       populateSprites();
       moveSprites();
+
     }
 
     // DRAW LOOP: Pause Game Cycle
@@ -400,6 +401,15 @@ public class Game extends PApplet{
       // Set speed of moving skyWorld background
       skyWorld.moveBgXY(-0.3f, 0f);
 
+      articuno.show();
+      articuno.setSpeed(-1,-2);
+      // articuno.move(-1, 2);
+      if(articuno.isOverlapping(zapdos)){
+        health = -1;
+        zapdos.setSpeed(0,0);
+        articuno.setSpeed(10,0);
+      }
+
     }
 
     // UPDATE: brickWorld Screen
@@ -482,17 +492,17 @@ public class Game extends PApplet{
 
             //CASE 1: Enemy collides with chick
             if(wolf.equals(currentImage) && chick.equals(nextSprite)){
-
+                health = 0;
 
             }
 
             //CASE 2: Move enemy over to new location (when NOT out of bounds!)
-            else if(c != 0){
+            else if(wolf.equals(currentImage)  && c != 0){
 
               //Erase image/sprite from old location
-
+              grid1.clearTileImage(loc);
+              grid1.setTileImage(nextLoc, wolf);
               //System.out.println(loc + " " + grid.hasTileImage(loc));
-
             }
 
             //CASE 3: Enemy leaves screen at first column
@@ -535,7 +545,9 @@ public class Game extends PApplet{
 
   // Indicates when the main game is over
   public boolean isGameOver(){
-    
+    if(health == 0){
+      return true;
+    }
     return false; //by default, the game is never over
   }
 
