@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Input class - to have popup boxes for users to type data
  * Modified from North Toronto Collegiate Institute, Gerry Heffernan: https://ntci.on.ca/compsci/hef/ics3/ch1/1_4.html
@@ -5,10 +7,6 @@
  * @version 5/13/25
  * Renamed prompt --> question
  */
-
-import javax.swing.*;
-
-
 public class Input{
 
     /**

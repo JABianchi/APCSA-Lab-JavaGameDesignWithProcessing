@@ -5,7 +5,6 @@
  * @version 5/8/25
  * Updated to Java version
  */
-
 public class HexLocation extends GridLocation{
  
   private int xCoord;

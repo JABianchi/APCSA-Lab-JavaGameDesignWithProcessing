@@ -1,16 +1,14 @@
+import processing.core.PApplet;
+import processing.core.PFont;
+import java.awt.Font;
+import java.io.InputStream;
+
 /**
  * Button Class - Used to add a button into a Game
  * @author Joel A Bianchi
  * Last Edit: 5/22/25
  * Button IS-A Sprite now
  */
-
-import processing.core.PApplet;
-import processing.core.PFont;
-import java.awt.Font;
-import java.io.InputStream;
-
-
 public class Button extends Sprite{
 
     PApplet p;

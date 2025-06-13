@@ -1,3 +1,10 @@
+import java.awt.Polygon;
+import java.awt.Point;
+import java.util.ArrayList;
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.core.PGraphics;
+
 /**
  * HexGrid Class - useful for tile-based games with more flavor!
  * Inspired from CSRessel's Catan Game & Emmanuel Suriel's Grid class
@@ -10,15 +17,6 @@
  * Using new PColor methods
  * NOT FULLY FUNCTIONAL YET
  */
- 
-import java.awt.Polygon;
-import java.awt.Point;
-import java.util.ArrayList;
-import processing.core.PApplet;
-import processing.core.PImage;
-import processing.core.PGraphics;
-
-
 public class HexGrid {
 
 	PApplet p;

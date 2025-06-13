@@ -1,3 +1,7 @@
+import processing.core.PApplet;
+import java.awt.Polygon;
+import java.awt.Point;
+
 /**
  * HexTile Class
  * @author Joel A Bianchi
@@ -6,13 +10,6 @@
  * @version 5/8/25
  * Updated to Java version
  */
-
-import processing.core.PApplet;
-import processing.core.PImage;
-import java.awt.Polygon;
-import java.awt.Point;
-
-
 public class HexTile extends GridTile{
   
   private Polygon hexPoly;

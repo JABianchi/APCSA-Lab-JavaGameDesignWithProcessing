@@ -1,12 +1,13 @@
 /**
  * Game Class - Primary game logic for a Java-based Processing Game
  * @author Joel A Bianchi
- * @version 5/29/25
- * Added example for using grid method setAllMarks()
+ * @version 6/12/25
+ * No need to create PImage for bg
  */
 
 //import processing.sound.*;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 
@@ -28,13 +29,11 @@ public class Game extends PApplet{
 
   // VARIABLES: splashScreen
   Screen splashScreen;
-  PImage splashBg;
   String splashBgFile = "images/apcsa.png";
   //SoundFile song;
 
   // VARIABLES: grid1 Screen (pieces on a grid pattern)
   Grid grid1;
-  PImage grid1Bg;
   String grid1BgFile = "images/connect4bg.png";
   PImage piece1;   // Use PImage to display the image in a GridLocation
   String piece1File = "images/redhorse.png";
@@ -52,7 +51,6 @@ public class Game extends PApplet{
 
   // VARIABLES: skyWorld Screen (characters move by pixels)
   World skyWorld;
-  PImage skyWorldBg;
   String skyWorldBgFile = "images/sky.png";
   Sprite zapdos; //Use Sprite for a pixel-based Location
   String zapdosFile = "images/zapdos.png";
@@ -62,13 +60,11 @@ public class Game extends PApplet{
 
   //VARIABLES: brickWorld Screen (characters jump on platforms with gravity)
   World brickWorld;
-  PImage brickWorldBg;
   String brickWorldBgFile = "images/wall.jpg";
   Platform plat;
 
   // VARIABLES: endScreen
   World endScreen;
-  PImage endBg;
   String endBgFile = "images/youwin.png";
 
 
@@ -94,31 +90,16 @@ public class Game extends PApplet{
   //Required Processing method that gets run once
   public void setup() {
 
-    p.imageMode(p.CORNER);    //Set Images to read coordinates at corners
-    //fullScreen();   //only use if not using a specfic bg image
-    
     //SETUP: Set the title on the title bar
     surface.setTitle(titleText);
-
-    //SETUP: Load BG images used in all screens
-    splashBg = p.loadImage(splashBgFile);
-    grid1Bg = p.loadImage(grid1BgFile);
-    skyWorldBg = p.loadImage(skyWorldBgFile);
-    brickWorldBg = loadImage(brickWorldBgFile);
-    endBg = p.loadImage(endBgFile);
-
-    //SETUP: If non-moving, Resize all BG images to exactly match the screen size
-    splashBg.resize(p.width, p.height);
-    grid1Bg.resize(p.width, p.height);
-    brickWorldBg.resize(p.width, p.height);
-    endBg.resize(p.width, p.height);   
+    p.imageMode(PConstants.CORNER);    //Set Images to read coordinates at corners
 
     //SETUP: Construct each Screen, World, Grid
-    splashScreen = new Screen(p, "splash", splashBg);       
-    grid1 = new Grid(p, "chessBoard", grid1Bg, 6, 7);
+    splashScreen = new Screen(p, "splash", splashBgFile);
+    grid1 = new Grid(p, "chessBoard", grid1BgFile, 6, 8);
     skyWorld = new World(p, "sky", skyWorldBgFile, 4.0f, 0.0f, -800.0f); //moveable World constructor
-    brickWorld = new World(p,"platformer", brickWorldBg);
-    endScreen = new World(p, "end", endBg);
+    brickWorld = new World(p,"platformer", brickWorldBgFile);
+    endScreen = new World(p, "end", endBgFile);
     currentScreen = splashScreen;
 
     //SETUP: Construct Game objects used in All Screens

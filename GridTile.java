@@ -1,3 +1,6 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+
 /**
  * GridTile class - Designed to be used within the Grid class
  * GridTiles have distinguishable marks that will be printed out to the console for easy visualization of a 2D array
@@ -8,11 +11,6 @@
  * @version 5/8/25
  * Updated to Java version
  */
-
-import processing.core.PApplet;
-import processing.core.PImage;
-
-
 public class GridTile{
 
   PApplet p;

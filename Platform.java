@@ -1,3 +1,6 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+
 /**
  * Platform class
  * Can be used with the following tutorials:
@@ -10,11 +13,6 @@
  * Now inherits from Sprite class
  * javadoc formatting
  */
-
-import processing.core.PApplet;
-import processing.core.PImage;
-
-
 public class Platform extends Sprite {
 
 	private int color = PColor.BLACK;

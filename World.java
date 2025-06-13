@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import processing.core.PApplet;
+import processing.core.PImage;
+
 /** 
  * World Class - Used to describe the screen of a pixel-based game
  * Subclass of a Screen, includes an ArrayList of Sprite objects
@@ -5,16 +9,9 @@
  * @author Nathan Santos
  * @author Clive Sherwood
  * @author Vanessa Balbuena
- * @version 5/29/25
- * Added getColliders() method
- * Added javadoc formatting
+ * @version 6/12/25
+ * All Worlds take in files, create & resize background PImages
  */
-
-import java.util.ArrayList;
-import processing.core.PApplet;
-import processing.core.PImage;
-
-
 public class World extends Screen{
 
   //------------------ WORLD FIELDS --------------------//
@@ -27,10 +24,10 @@ public class World extends Screen{
    * World Constructor #1: Creates a World with the specificed background image
    * @param p             Processing applet
    * @param screenName    String to track Screens
-   * @param bgImg         stationary background image
+   * @param bgFile        file location for a stationary background image
    */
-  public World(PApplet p, String screenName, PImage bgImg) {
-    super(p, screenName, bgImg);
+  public World(PApplet p, String screenName, String bgFile) {
+    super(p, screenName, bgFile);
   }
 
   /**
@@ -69,16 +66,17 @@ public class World extends Screen{
   
 
 
-  /**
-   * World Constructor #5: for Moveable backgrounds (NOT WORKING!)
-   * Takes in a file, not PImage
-   * @param p             Processing applet
-   * @param screenName    String to track Screens
-   * @param movingBgFile  filename for the background image to move
-   * @param scale         float that multiplies the size of the image to display
-   * @param x             sets the initial left edge of the background
-   * @param y             sets the intial top edge of the background
-   */
+  // @Deprecated
+  // /**
+  //  * World Constructor #5: for Moveable backgrounds (NOT WORKING!)
+  //  * Takes in a file, not PImage
+  //  * @param p             Processing applet
+  //  * @param screenName    String to track Screens
+  //  * @param movingBgFile  filename for the background image to move
+  //  * @param scale         float that multiplies the size of the image to display
+  //  * @param x             sets the initial left edge of the background
+  //  * @param y             sets the intial top edge of the background
+  //  */
   // public World(PApplet p, String screenName, PImage movingBg, float scale, float x, float y) {
   //   super(p, screenName, movingBg, scale, x, y);
   //   System.out.println("World " + screenName + " constructed with " + Util.toStringPImage(movingBg));

@@ -1,26 +1,24 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+
 /**
  * Screen class - a high level class that handles background screens & millisecond timing
  * Has a World Subclass
  * @author Joel A Bianchi
  * @author Carey Jiang
- * @version 5/29/25
- * updated formatting for javadoc
+ * @version 6/12/25
+ * All Screens take in files, create & resize background PImages
  */
-
-import processing.core.PApplet;
-import processing.core.PImage;
-
-
 public class Screen{
 
     PApplet p;
 
     //------------------ SCREEN FIELDS --------------------//
     private String screenName;
-    private PImage bg;
+    private String bgFile;
+    private PImage bgImg;
     private boolean isMoveable;
     private Sprite mbg;
-    
     private long startTime;
     private long lastTime = 0;
 
@@ -30,14 +28,18 @@ public class Screen{
      * Screen Constructor #1: Stationary background image
      * @param p             Processing applet
      * @param screenName    String to track Screens
-     * @param bgImg         stationary background image
+     * @param bgFile        file location for a stationary background image
      */
-    public Screen(PApplet p, String screenName, PImage bgImg) {
+    public Screen(PApplet p, String screenName, String bgFile) {
         this.p = p;
         this.isMoveable = false;
         this.setName(screenName);
-        if(bgImg != null) {
-            this.setBg(bgImg);
+        this.bgFile = bgFile;
+
+        if(bgFile != null) {
+            bgImg = p.loadImage(bgFile);
+            bgImg.resize(p.width, p.height);
+            this.setBgImg(bgImg);
             System.out.println("bg of " + screenName + " Screen: " + Util.toStringPImage(bgImg));
         }
         startTime = getTotalTime(); //?
@@ -61,23 +63,24 @@ public class Screen{
         startTime = getTotalTime();
     }
 
-    /**
-     * Screen Constructor #3: For background images that move - Takes PImage (Coded as a Sprite, not a Processing background PImage)
-     * @param p             Processing applet
-     * @param screenName    String to track Screens
-     * @param movingBg      PImage for a moving background
-     * @param scale         float that multiplies the size of the image to display
-     * @param x             sets the initial left edge of the background
-     * @param y             sets the intial top edge of the background
-     */
-    public Screen(PApplet p, String screenName, PImage movingBg, float scale, float x, float y) {
-        this.p = p;
-        this.isMoveable = true;
-        this.setName(screenName);
-        mbg = new Sprite(p, movingBg, scale, x, y);
-        System.out.println("Screen constructed with " + mbg.getImagePath() + "\t" + mbg);
-        startTime = getTotalTime();
-    }
+    // @Deprecated
+    // /**
+    //  * Screen Constructor #3: For background images that move - Takes PImage (Coded as a Sprite, not a Processing background PImage)
+    //  * @param p             Processing applet
+    //  * @param screenName    String to track Screens
+    //  * @param movingBg      PImage for a moving background
+    //  * @param scale         float that multiplies the size of the image to display
+    //  * @param x             sets the initial left edge of the background
+    //  * @param y             sets the intial top edge of the background
+    //  */
+    // public Screen(PApplet p, String screenName, PImage movingBg, float scale, float x, float y) {
+    //     this.p = p;
+    //     this.isMoveable = true;
+    //     this.setName(screenName);
+    //     mbg = new Sprite(p, movingBg, scale, x, y);
+    //     System.out.println("Screen constructed with " + mbg.getImagePath() + "\t" + mbg);
+    //     startTime = getTotalTime();
+    // }
 
 
     //------------------ ACCESSORS & MUTATORS --------------------//
@@ -103,9 +106,9 @@ public class Screen{
      * Sets the background image for NON-MOVEABLE backgrounds
      * @param bgImg            stationary background image
      */
-    public void setBg(PImage bgImg){
+    public void setBgImg(PImage bgImg){
         if(!isMoveable){
-            this.bg = bgImg;
+            this.bgImg = bgImg;
             //p.background(bg);
         }
     }
@@ -119,7 +122,7 @@ public class Screen{
         if(isMoveable){
             return mbg.getImage();
         }
-        return bg;
+        return bgImg;
     }
     
     /** 
@@ -183,8 +186,8 @@ public class Screen{
     public void showBg(){
         if(isMoveable){
             mbg.show();
-        } else if(bg != null){
-            p.background(bg);
+        } else if(bgImg != null){
+            p.background(bgImg);
         }
     }
 

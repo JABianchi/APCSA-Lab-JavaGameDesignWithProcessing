@@ -1,3 +1,9 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.data.JSONArray;
+import processing.data.JSONObject;
+import java.util.ArrayList;
+
 /** 
  * Animated Sprite class - useful to have Sprites move around
  * Designed to be used with Spritesheets & JSON Array files from TexturePacker software: 
@@ -6,17 +12,9 @@
  * @author Joel Bianchi
  * @author Aiden Sing
  * @author Tahlei Richardson
- * @version 5/8/25
- * Updated to Java version
+ * @version 6/12/25
+ * Ability to resize animatedSprites
  */
-
-import processing.core.PApplet;
-import processing.core.PImage;
-import processing.data.JSONArray;
-import processing.data.JSONObject;
-import java.util.ArrayList;
-
- 
 public class AnimatedSprite extends Sprite{
 
   private String pngFile;
@@ -207,9 +205,12 @@ public class AnimatedSprite extends Sprite{
    * @param h     height of the newly sized AnimatedSprite
    */
   public void resize(int w, int h){
+    super.setH(h);
+    super.setW(w);
     for(int i=0; i<animation.size(); i++){
       PImage pi = animation.get(i);
       pi.resize(w,h);
+      // System.out.println("Resizeing AS with index " + i + "h:" +pi.height + ",w:" + pi.width);
     }
   }
 

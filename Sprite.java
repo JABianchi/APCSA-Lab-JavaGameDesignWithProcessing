@@ -1,20 +1,15 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+
 /** 
  * Sprite class - to create objects that move around with their own properties
  * Inspired by Daniel Shiffman's p5js Animated Sprite tutorial
  * Note: Picture coordinate origina at top, left corner
  * @author Joel A Bianchi
  * @author Marcus Bistline
- * @version 5/29/25
- * updated formatting for javadoc
- * Added isOverlapping() method
- * Added isTouchingTop(), isTouchingBottom(), isTouchingRight(), and isTouchingLeft() methods
- * Added isSolid property to Sprites
+ * @version 6/12/25
+ * resize updated for pixels (float)
  */
-
-import processing.core.PApplet;
-import processing.core.PImage;
-
-
 public class Sprite{
 
   public PApplet p;
@@ -125,6 +120,7 @@ public class Sprite{
     this.h = spriteImg.height * scale;
     setLeft(x);
     setTop(y);
+    resize(w,h);
     this.speedX = 0;
     this.speedY = 0;
     this.isAnimated = false;
@@ -729,8 +725,11 @@ public class Sprite{
    * @param width           how many pixels wide the Sprite will change to
    * @param height          how many pixels high the Sprite will change to
    */
-  public void resize(int width, int height){
-    spriteImg.resize(width, height);
+  public void resize(float width, float height){
+    this.w = width;
+    this.h = height;
+    System.out.println("Resizing Sprite to " + width + "x" +  height);
+    spriteImg.resize( (int) width, (int) height);
   }
   
   /** 

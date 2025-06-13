@@ -4,8 +4,6 @@
  * @version 5/10/25
  * Modified toString
  */
-
-
 public class GridLocation{
  
   int row;
