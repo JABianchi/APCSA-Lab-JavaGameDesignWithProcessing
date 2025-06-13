@@ -9,6 +9,7 @@ import processing.core.PImage;
  * @author RJ Morel
  * @version 6/12/25
  * All Grids take in files, create & resize background PImages
+ * Added copyTileSprite() & moveTileSprite() to help with populating & moving Sprites through the Grid
  */
 public class Grid extends World{
   
@@ -460,6 +461,27 @@ public class Grid extends World{
     //System.out.println("Grid.getTileSprite() " + tile.getSprite());
     return tile.getSprite();
   }
+
+  /** 
+   * Sets a copy of a Sprite at a particular tile in the grid & displays it
+   * @param loc         GridLocation to add copied Sprite to
+   * @param sprite      Sprite to make a copy of and add to tile
+   */
+  public void copyTileSprite(GridLocation loc, Sprite sprite){
+    Sprite copySprite = sprite.copy();
+    setTileSprite(loc, copySprite);
+  }
+
+   /** 
+   * Moves the Sprite at a particular tile in the grid to a new location
+   * @param oldLoc      original GridLocation of the Sprite
+   * @param newLoc      new GridLocation of the Sprite
+   */
+  public void moveTileSprite(GridLocation oldLoc, GridLocation newLoc){
+    Sprite currentSprite = getTileSprite(oldLoc);
+    clearTileSprite(oldLoc);
+    setTileSprite(newLoc, currentSprite);
+  }
   
   /** 
    * Checks if a Tile has a PImage
@@ -471,8 +493,9 @@ public class Grid extends World{
     return tile.hasSprite();
   }
 
-  /** 
-   * Clears the image from a particular tile
+  /**
+   * Clears the Sprite from a particular tile
+   * If trying to move the Sprite, you caan also use moveTileSprite() instead
    * @param loc         GridLocation for a specific GridTile
    */
   public void clearTileSprite(GridLocation loc){

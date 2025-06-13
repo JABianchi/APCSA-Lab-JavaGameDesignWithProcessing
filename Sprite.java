@@ -8,7 +8,8 @@ import processing.core.PImage;
  * @author Joel A Bianchi
  * @author Marcus Bistline
  * @version 6/12/25
- * resize updated for pixels (float)
+ * resize() updated for pixels (float)
+ * scale() added
  */
 public class Sprite{
 
@@ -86,9 +87,7 @@ public class Sprite{
     if(!isAnimated){
       if( spriteImgFile != null){
         this.spriteImg = p.loadImage(spriteImgFile);
-        w = spriteImg.width * scale;
-        h = spriteImg.height * scale;
-        // System.out.println("Sprite 64: " + spriteImg);
+        scale(scale);
       } else {
 
       }
@@ -730,6 +729,16 @@ public class Sprite{
     this.h = height;
     System.out.println("Resizing Sprite to " + width + "x" +  height);
     spriteImg.resize( (int) width, (int) height);
+  }
+
+  /** 
+   * Scales Sprite to be bigger (with values > 1.0f)
+   * and smaller (with values < 1.0f)
+   * @param scale       number to multiple height & width of image by
+   */
+  public void scale(float scale){
+    w = spriteImg.width * scale;
+    h = spriteImg.height * scale;
   }
   
   /** 
