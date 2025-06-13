@@ -96,7 +96,7 @@ public class Game extends PApplet{
 
     //SETUP: Construct each Screen, World, Grid
     splashScreen = new Screen(p, "splash", splashBgFile);
-    grid1 = new Grid(p, "chessBoard", grid1BgFile, 6, 8);
+    grid1 = new Grid(p, "chessBoard", grid1BgFile, 6, 7);
     skyWorld = new World(p, "sky", skyWorldBgFile, 4.0f, 0.0f, -800.0f); //moveable World constructor
     brickWorld = new World(p,"platformer", brickWorldBgFile);
     endScreen = new World(p, "end", endBgFile);
@@ -180,7 +180,6 @@ public class Game extends PApplet{
     if(slowCycleTimer.isDone()){
       populateSprites();
       moveSprites();
-
     }
 
     // DRAW LOOP: Pause Game Cycle
