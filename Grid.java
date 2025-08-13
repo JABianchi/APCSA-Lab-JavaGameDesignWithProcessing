@@ -175,6 +175,22 @@ public class Grid extends World{
     printingGridMarks = false;
   }
 
+  // NEW!
+  public String getTileMark(GridLocation loc){
+    return getTile(loc).getMark();
+  }
+
+  // NEW!
+  public void setTileMark(GridLocation loc, String mark){
+    getTile(loc).setMark(mark);
+  }
+
+  // NEW!
+  public void setTileColor(GridLocation loc, int color){
+    getTile(loc).setColor(color);
+  }
+
+
   
   /**
    * Sets the marks for an entire grid from a 2D String array
@@ -219,15 +235,29 @@ public class Grid extends World{
   //------------------ GRID ACCESSOR METHODS --------------------//
 
   /** 
+   * @param pixelX            x-value pixel to check
+   * @param pixelY            y-value pixel to check
+   * @return GridLocation     GridLocation which envelopes a specific pixel
+   */  
+  public GridLocation getGridLocation(int pixelX, int pixelY){
+      
+    int row = pixelY/(p.pixelHeight/this.rows);
+    int col = pixelX/(p.pixelWidth/this.cols);
+
+    return new GridLocation(row, col);
+  }
+
+  /** 
    * @return GridLocation     where the mouse is currently hovering over
    */  
-  public GridLocation getGridLocation(){
+  public GridLocation getGridLocationOfMouse(){
       
     int row = p.mouseY/(p.pixelHeight/this.rows);
     int col = p.mouseX/(p.pixelWidth/this.cols);
 
     return new GridLocation(row, col);
   }
+  
   
   /** 
    * Provides the x-pixel value given a GridLocation loc

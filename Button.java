@@ -211,6 +211,11 @@ public class Button extends Sprite{
         this.isVisible = visible;
     }
 
+    // NEW METHOD!
+    public boolean getIsVisible(){
+        return this.isVisible;
+    }
+
 
     public void setShapeRounding(float shapeRounding){
         this.shapeRounding =  shapeRounding;
