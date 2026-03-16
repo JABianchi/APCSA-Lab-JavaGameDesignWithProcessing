@@ -35,4 +35,8 @@ for i in {1..10}; do
 done
 
 echo "❌ ERROR: Port 6080 failed to start."
-exit 1
+
+# Add this at the bottom
+read -p "Press enter to close this terminal..."
+
+# exit 1

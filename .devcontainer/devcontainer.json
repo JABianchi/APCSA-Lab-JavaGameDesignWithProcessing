@@ -15,8 +15,8 @@
             "visibility": "private"
         }
     },
-    "postCreateCommand": "bash scripts/setup.sh",
-    "postStartCommand": "bash scripts/start-vnc.sh",
+    "postCreateCommand": "bash -x ${containerWorkspaceFolder}/scripts/setup.sh",
+    "postStartCommand": "bash -x ${containerWorkspaceFolder}/scripts/start-vnc.sh",
     "remoteEnv": {
         "DISPLAY": ":1"
     }
