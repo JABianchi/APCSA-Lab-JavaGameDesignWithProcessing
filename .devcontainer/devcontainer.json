@@ -1,39 +1,16 @@
 {
-    "name": "Java Game Design (Processing)",
+    "name": "Java Game Design (Chromebook Edition)",
     "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
-    // "features": {
-    //     "ghcr.io/devcontainers/features/desktop-lite:1": {
-    //         "password": "vscode",
-    //         "webPort": "6080"
-    //     }
-    // },
-
-    // "features": {
-    //     "ghcr.io/devcontainers/features/desktop-lite:1": {
-    //         "installFluxbox": true,
-    //         "uiVersion": "novnc"
-    //     }
-    // },
-
-    "features": {
-        "ghcr.io/devcontainers/features/x11:1": {
-            "provideVnc": true
-        }
-    },
-
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "vscjava.vscode-java-pack"
-            ]
-        }
-    },
+    "features": {},
     "forwardPorts": [6080],
     "portsAttributes": {
         "6080": {
-            "label": "Game Screen (noVNC)",
-            "onAutoForward": "silent"
+            "label": "Game Window",
+            "onAutoForward": "openBrowser"
         }
     },
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libxrender1 libxtst6 libxi6"
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libxrender1 libxtst6 libxi6 fluxbox novnc x11vnc && (Xvfb :1 -screen 0 1024x768x24 & sleep 2 && DISPLAY=:1 fluxbox & x11vnc -display :1 -nopw -forever -shared & /usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 6080)",
+    "remoteEnv": {
+        "DISPLAY": ":1"
+    }
 }
