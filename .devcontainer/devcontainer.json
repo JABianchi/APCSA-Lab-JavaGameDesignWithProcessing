@@ -7,10 +7,6 @@
             "onAutoForward": "silent",
             "visibility": "private"
         },
-        // "5901": {
-        //     "onAutoForward": "silent",
-        //     "visibility": "private"
-        // },
         "6080": {
             "label": "Game Screen",
             "onAutoForward": "openBrowser",
@@ -19,8 +15,8 @@
             "path": "/vnc_lite.html?autoconnect=true&reconnect=true&resize=scale"
         }
     },
-    "postCreateCommand": "bash ./scripts/setup.sh",
-    "postStartCommand": "bash ./scripts/start-vnc.sh &",
+    "postCreateCommand": "bash scripts/setup.sh",
+    "postStartCommand": "bash scripts/start-vnc.sh &",
     "remoteEnv": {
         "DISPLAY": ":1"
     }
