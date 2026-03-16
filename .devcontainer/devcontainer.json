@@ -1,0 +1,25 @@
+{
+    "name": "Java Game Design (Processing)",
+    "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
+    "features": {
+        "ghcr.io/devcontainers/features/desktop-lite:1": {
+            "password": "vscode",
+            "webPort": "6080"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack"
+            ]
+        }
+    },
+    "forwardPorts": [6080],
+    "portsAttributes": {
+        "6080": {
+            "label": "Game Screen (noVNC)",
+            "onAutoForward": "silent"
+        }
+    },
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libxrender1 libxtst6 libxi6"
+}
