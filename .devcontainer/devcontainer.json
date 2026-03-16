@@ -8,12 +8,19 @@
     //     }
     // },
 
+    // "features": {
+    //     "ghcr.io/devcontainers/features/desktop-lite:1": {
+    //         "installFluxbox": true,
+    //         "uiVersion": "novnc"
+    //     }
+    // },
+
     "features": {
-        "ghcr.io/devcontainers/features/desktop-lite:1": {
-            "installFluxbox": true,
-            "uiVersion": "novnc"
+        "ghcr.io/devcontainers/features/x11:1": {
+            "provideVnc": true
         }
     },
+
     "customizations": {
         "vscode": {
             "extensions": [
