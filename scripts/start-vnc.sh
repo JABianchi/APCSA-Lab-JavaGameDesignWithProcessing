@@ -39,4 +39,9 @@ echo "❌ ERROR: Port 6080 failed to start."
 # Add this at the bottom
 read -p "Press enter to close this terminal..."
 
+
+echo "Startup sequence complete."
+# This keeps the terminal alive so you can see the '✅ SUCCESS' message
+tail -f /dev/null
+
 # exit 1
