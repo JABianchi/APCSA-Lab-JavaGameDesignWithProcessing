@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # 1. Kill everything cleanly
 sudo pkill -9 Xvfb || true
@@ -14,7 +13,7 @@ Xvfb :1 -screen 0 1024x768x24 &
 sleep 2
 
 # 3. Start Window Manager
-fluxbox &
+DISPLAY=:1 fluxbox &
 sleep 1
 
 # 4. Start VNC Server with 'Relaunch' logic
@@ -24,7 +23,7 @@ sleep 2
 
 # 5. Start the Web Bridge
 # --vnc-path to ensure the webserver finds the index files
-/usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 6080 --vnc-path /usr/share/novnc &
+/usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 6080 --web /usr/share/novnc &
 
 # 6. The "Monday Morning" Readiness Check
 echo "Waiting for Game Screen to wake up..."
