@@ -1,10 +1,17 @@
 {
     "name": "Java Game Design (Processing)",
     "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
+    // "features": {
+    //     "ghcr.io/devcontainers/features/desktop-lite:1": {
+    //         "password": "vscode",
+    //         "webPort": "6080"
+    //     }
+    // },
+
     "features": {
         "ghcr.io/devcontainers/features/desktop-lite:1": {
-            "password": "vscode",
-            "webPort": "6080"
+            "installFluxbox": true,
+            "uiVersion": "novnc"
         }
     },
     "customizations": {
