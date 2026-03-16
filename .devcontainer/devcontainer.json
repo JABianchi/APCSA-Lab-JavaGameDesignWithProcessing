@@ -2,21 +2,21 @@
     "name": "Java Game Design",
     "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
     "portsAttributes": {
-        "5900": {
-            "label": "Internal VNC",
-            "onAutoForward": "silent",
-            "visibility": "private"
-        },
         "6080": {
             "label": "Game Screen",
             "onAutoForward": "openBrowser",
             "protocol": "http",
             "visibility": "public",
-            "path": "/vnc_lite.html?autoconnect=true&reconnect=true&resize=scale"
+            "path": "/vnc.html?autoconnect=true&reconnect=true"
+        },
+        "5900": {
+            "label": "Internal VNC",
+            "onAutoForward": "silent",
+            "visibility": "private"
         }
     },
     "postCreateCommand": "bash scripts/setup.sh",
-    "postStartCommand": "bash scripts/start-vnc.sh &",
+    "postStartCommand": "bash scripts/start-vnc.sh",
     "remoteEnv": {
         "DISPLAY": ":1"
     }
