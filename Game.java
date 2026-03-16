@@ -255,18 +255,18 @@ public class Game extends PApplet{
 
     // if the Screen is a Grid, print grid coordinate clicked
     if(currentScreen instanceof Grid){
-      System.out.println("Grid location --> " + ((Grid) currentScreen).getGridLocation());
+      System.out.println("Grid location --> " + ((Grid) currentScreen).getGridLocationOfMouse());
     }
 
     // if the Screen is a Grid, "mark" the grid coordinate to track the state of the Grid
     if(currentScreen instanceof Grid){
-      ((Grid) currentScreen).setMark("X",((Grid) currentScreen).getGridLocation());
+      ((Grid) currentScreen).setMark("X",((Grid) currentScreen).getGridLocationOfMouse());
     }
 
     // what to do if clicked? (ex. assign a new location to piece1)
     if(currentScreen == grid1){
-      piece1Row = grid1.getGridLocation().getRow();
-      piece1Col = grid1.getGridLocation().getCol();
+      piece1Row = grid1.getGridLocationOfMouse().getRow();
+      piece1Col = grid1.getGridLocationOfMouse().getCol();
     }
     
 
