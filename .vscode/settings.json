@@ -11,7 +11,7 @@
         "sketch.properties": true,
         ".devcontainer": false,
         "lib" : true,
-        "scripts" : true,
+        "scripts" : false,
         ".gitignore": true
     },
 
