@@ -3,6 +3,9 @@ set -e # Exit immediately if a command fails
 
 echo "🔧 Starting environment setup..."
 
+# 0. Give permissions to all scripts
+chmod +x scripts/*.sh
+
 # 1. Fix package sources and install tools
 sudo rm -f /etc/apt/sources.list.d/yarn.list
 sudo apt-get update
