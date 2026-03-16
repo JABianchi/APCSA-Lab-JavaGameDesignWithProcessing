@@ -3,5 +3,23 @@
         "lib/**/*.jar"
         // "c:\\Program Files\\processing\\core\\library\\core.jar",
         // "c:\\Program Files\\processing\\modes\\java\\libraries\\sound\\library\\sound.jar"
-    ]
+    ],
+    "files.exclude": {
+        "bin/": false,
+        "**/*.class": false,
+        ".vscode/": false,
+        "sketch.properties": true,
+        ".devcontainer": false,
+        "lib" : true,
+        "scripts" : true,
+        ".gitignore": true
+    },
+
+
+    "java.server.launchMode": "Standard",
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false,
+
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000
 }

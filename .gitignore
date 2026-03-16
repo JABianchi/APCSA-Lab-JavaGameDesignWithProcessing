@@ -1,7 +1,28 @@
-out
-.DS_Store
+# --- Project Folders ---
+bin/
+out/
+javadoc/
+
+# --- Compiled Files ---
 *.class
+*.jar
+
+# --- System & IDE Files ---
+.DS_Store
+Thumbs.db
+sketch.properties
+.history/
+
+# --- VS Code Logs ---
+.vscode/*.log
+
+* --- Old ---
+out
 out/source
 out/*.class
 javadoc
 javadoc/*
+
+
+*--- KEEP ---
+!lib/core/core.jar

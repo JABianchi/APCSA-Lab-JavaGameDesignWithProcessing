@@ -1,15 +1,20 @@
 {
-    "name": "Java Game Design (Chromebook Edition)",
+    "name": "Java Game Design",
     "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
     "features": {},
     "forwardPorts": [6080],
     "portsAttributes": {
+        "5900": { "onAutoForward": "ignore" },
+        "5901": { "onAutoForward": "ignore" },
         "6080": {
-            "label": "Game Window",
-            "onAutoForward": "openBrowser"
+            "label": "Game Screen",
+            "onAutoForward": "openBrowser",
+            "protocol": "http",
+            "path": "/vnc_lite.html?autoconnect=true&reconnect=true&resize=scale"
         }
     },
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libxrender1 libxtst6 libxi6 fluxbox novnc x11vnc && (Xvfb :1 -screen 0 1024x768x24 & sleep 2 && DISPLAY=:1 fluxbox & x11vnc -display :1 -nopw -forever -shared & /usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 6080)",
+    "postCreateCommand": "sudo rm -f /etc/apt/sources.list.d/yarn.list && sudo apt-get update && sudo apt-get install -y fluxbox novnc x11vnc xvfb && chmod +x scripts/run.sh",
+    "postStartCommand": "Xvfb :1 -screen 0 1024x768x24 & sleep 2 && fluxbox & sleep 1 && fluxbox-remote \"SetResourceValue session.screen0.toolbar.visible false\" && x11vnc -display :1 -nopw -forever -shared & /usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 6080",
     "remoteEnv": {
         "DISPLAY": ":1"
     }
